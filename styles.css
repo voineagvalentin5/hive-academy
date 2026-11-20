@@ -113,6 +113,12 @@ section{scroll-margin-top:64px}
 .foot p{margin:0;color:var(--muted);font-size:14px}
 .foot a{color:var(--gold2);text-decoration:none}
 
+/* two featured experiences side by side */
+.experience-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.experience-grid .astra{height:100%;grid-template-columns:1fr;justify-items:start;align-content:start}
+.experience-grid .astra__emblem{width:160px}
+.experience-grid .astra h3{font-size:26px}
+
 /* modules */
 .modules{padding-top:40px;padding-bottom:40px}
 .experience{padding-bottom:20px}
@@ -124,6 +130,7 @@ section{scroll-margin-top:64px}
 @media (max-width:900px){.module__mark{width:auto;justify-items:start}.module__mark svg{width:110px;height:110px}}
 
 @media (max-width:900px){
+  .experience-grid{grid-template-columns:1fr}
   .preview-banner__inner{align-items:flex-start}
   .hero__inner{grid-template-columns:1fr;padding-top:48px;padding-bottom:100px;text-align:left}
   .hero__mark{order:-1;width:min(330px,78vw);justify-self:center}
