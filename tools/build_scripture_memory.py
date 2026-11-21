@@ -11,8 +11,7 @@ words from that verse. If a check fails the build stops.
   KJV: eBible.org "eng-kjv" (1769 text), as packaged in Hive Scribe data/kjv/*.json.gz.
        Brackets that mark words the translators supplied are removed; words are unchanged.
 
-The module page also copies the shared Codex Hive Labs nav from /index.html,
-so it stays identical to the Academy home page.
+The module page has a breadcrumb header (Codex Hive Labs › Hive Academy › Hive Kids Bible).
 """
 import gzip, json, pathlib, re, sys
 
@@ -206,13 +205,8 @@ OUT.parent.mkdir(parents=True, exist_ok=True)
 OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 print("wrote", OUT, len(stories), "stories")
 
-# shared nav, copied verbatim from the Academy home page
+# The module page uses a breadcrumb header (its first crumb, with the official Codex Hive logo,
+# links back to codex-hive.com) instead of the shared nav, so nothing is copied in here any more.
 if PAGE.exists():
-    idx = (ROOT / "index.html").read_text(encoding="utf-8")
-    nav = re.search(r"<!-- chl-lab-nav -->.*?<!-- /chl-lab-nav -->", idx, re.S).group(0)
     page = PAGE.read_text(encoding="utf-8")
-    page, k = re.subn(r"<!-- chl-lab-nav -->.*?<!-- /chl-lab-nav -->", lambda m: nav, page, flags=re.S)
-    assert k == 1
-    assert "noindex" in page and "G-DW4D6JPPB4" in page
-    PAGE.write_text(page, encoding="utf-8")
-    print("synced nav into", PAGE)
+    assert "noindex" in page and "G-DW4D6JPPB4" in page and 'aria-label="Breadcrumb"' in page and "https://codex-hive.com" in page

@@ -78,8 +78,25 @@
     window.scrollTo(0, 0);
   }
 
+  /* Breadcrumb: Codex Hive Labs › Hive Academy › Hive Kids Bible › [story] › [game] */
+  function crumbs(trail) {
+    var ol = document.getElementById("bc"), mod = ol.querySelector(".bc__item--module a");
+    ol.querySelectorAll(".bc__item--extra").forEach(function (li) { li.remove(); });
+    if (trail.length) mod.removeAttribute("aria-current"); else mod.setAttribute("aria-current", "page");
+    trail.forEach(function (c, i) {
+      var li = document.createElement("li"); li.className = "bc__item bc__item--extra";
+      var el = document.createElement(c.href ? "a" : "span");
+      if (c.href) el.href = c.href; else { el.className = "cur"; el.setAttribute("aria-current", "page"); }
+      el.textContent = c.t; el.title = c.t; li.appendChild(el); ol.appendChild(li);
+    });
+    var nav = ol.closest(".bc");
+    nav.classList.toggle("bc--deep", trail.length > 0);
+    nav.classList.toggle("bc--deeper", trail.length > 1);
+  }
+
   function home() {
     setTab("stories");
+    crumbs([]);
     var h = '<div class="intro"><div><h1>Bible stories &amp; verse games</h1>' +
       "<p>Read a story together, then play three short games to learn its key verse. Earn a star for each game.</p></div>" +
       '<a class="pill" href="#/progress"><span><span aria-hidden="true">★</span> <b>' + totalStars() + "</b> star" + (totalStars() === 1 ? "" : "s") + "</span><span>· <b>" + learnedCount() + "</b> verse" + (learnedCount() === 1 ? "" : "s") + " learned</span><span>· <b>" + streak() + "</b>-day streak</span></a></div>" +
@@ -108,8 +125,8 @@
 
   function storyView(s) {
     setTab("stories");
-    var h = '<a class="crumb" href="#/"><span aria-hidden="true">←</span> All stories</a>' +
-      '<div class="story"><article class="panel" aria-labelledby="st-title"><p class="kick">Story ' + s.order + " of " + DATA.stories.length + "</p>" +
+    crumbs([{ t: s.title }]);
+    var h = '<div class="story"><article class="panel" aria-labelledby="st-title"><p class="kick">Story ' + s.order + " of " + DATA.stories.length + "</p>" +
       '<h1 id="st-title">' + esc(s.title) + '</h1><p class="retell">' + esc(s.retelling) + "</p>" +
       '<p class="passage">Read it in the Bible: <strong>' + esc(s.passage) + "</strong></p>" + moreHtml(s) + "</article>" +
       '<div class="verses">';
@@ -159,7 +176,8 @@
 
   function playShell(s, mode) {
     setTab("stories");
-    app.innerHTML = '<div class="play"><a class="crumb" href="#/story/' + s.story.id + '"><span aria-hidden="true">←</span> ' + esc(s.title) + "</a>" +
+    crumbs([{ t: s.title, href: "#/story/" + s.story.id }, { t: MODES[mode].name + (s.of > 1 ? " (" + s.verse.ref + ")" : "") }]);
+    app.innerHTML = '<div class="play">' +
       '<div class="play__head"><h1 style="font-size:clamp(26px,3.4vw,36px);margin:0"><span aria-hidden="true">' + MODES[mode].icon + "</span> " + MODES[mode].name + "</h1>" +
       starsHtml(starCount(s.id), starCount(s.id) + " of 3 stars for this verse") + "</div>" +
       '<section class="board" aria-label="' + esc(MODES[mode].name + " game") + '"><p class="how">' + esc(MODES[mode].how) + '</p><div id="game"></div>' +
@@ -255,6 +273,7 @@
 
   function progress() {
     setTab("progress");
+    crumbs([{ t: "My stars" }]);
     var h = "<h1>My stars</h1>" + '<div class="prog">' +
       '<div class="stat"><b>' + totalStars() + '</b><span>stars of ' + ITEMS.length * 3 + "</span></div>" +
       '<div class="stat"><b>' + learnedCount() + '</b><span>' + (learnedCount() === 1 ? "verse" : "verses") + ' learned (3 stars)</span></div>' +
