@@ -5,7 +5,6 @@ SRC = pathlib.Path(sys.argv[1])
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "modules/rosetta-logos/index.html"
 s = SRC.read_text(encoding="utf-8")
-idx = (ROOT / "index.html").read_text(encoding="utf-8")
 
 def sub1(old, new, txt, count=1):
     n = txt.count(old)
@@ -51,34 +50,112 @@ head = head.replace("rgba(59,60,66,", "rgba(58,52,40,")
 # Academy chrome CSS
 chrome_css = '''
 /* Hive Academy chrome */
-#chl-lab-nav{margin:0 calc(-1*clamp(16px,3vw,32px))}
 h1,h2,.concept-name,.find .panel h3{letter-spacing:-.01em}
 h1{font-weight:700}h2{font-weight:650}.find .panel h3{font-weight:600}
 h1 em{font-style:normal;background:linear-gradient(180deg,#f0c77a,#c99a4b 60%,#9b6f2c);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.ac-head{margin:0 calc(-1*clamp(16px,3vw,32px));padding:14px clamp(16px,3vw,32px);border-bottom:1px solid rgba(201,154,75,.22);
-  background:radial-gradient(60% 140% at 85% 0%,rgba(201,154,75,.14),transparent 60%),linear-gradient(180deg,#16171c,#111216)}
-.ac-head__in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:16px}
-.ac-head__logo{display:block;flex:none}.ac-head__logo img{display:block;width:220px;height:auto}
-.ac-head__mod{margin-left:auto;text-align:right;font:650 11px/1.5 var(--display);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-.ac-head__mod a{color:var(--dim);text-decoration:none;letter-spacing:.12em}.ac-head__mod a:hover{color:var(--goldhi)}
 .kick{font-family:var(--display);font-weight:650;letter-spacing:.2em;color:var(--gold)}
 .prelim{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--dim);border-left:2px solid var(--gold);padding:8px 12px;background:rgba(201,154,75,.07);border-radius:0 3px 3px 0;max-width:80ch}
 .prelim b{color:var(--paper);font-weight:600}
 .plate{border-color:rgba(201,154,75,.22)}
 footer.bf img{height:26px;filter:none}
 footer.bf a{color:var(--gold2);text-decoration:none}
-@media (max-width:560px){.ac-head__logo img{width:170px}.ac-head__mod{font-size:10px;letter-spacing:.12em}}
 '''
 head = sub1("</style>\n</head>", chrome_css + "</style>\n</head>", head)
 
-# shared nav, copied verbatim from the Academy home page
-nav = re.search(r"<!-- chl-lab-nav -->.*?<!-- /chl-lab-nav -->", idx, re.S).group(0)
+# Breadcrumb + compact module bar (replaces the stacked Labs nav + Academy wordmark bar)
+ROSETTA_BC = r'''
+<style id="rl-appbar">
+.bc,.top{margin-left:calc(-1 * clamp(16px,3vw,32px));margin-right:calc(-1 * clamp(16px,3vw,32px))}
+.top{border-bottom:1px solid rgba(201,154,75,.28);background:#14151a;position:relative}
+.top__in{max-width:1180px;margin:0 auto;padding:8px 24px;display:flex;align-items:center;gap:14px;min-width:0}
+.top__home{display:flex;align-items:center;gap:12px;color:#ece8e1;text-decoration:none;flex:none}
+.top__home img{width:40px;height:40px;display:block}
+.top__name{display:block;font:750 20px/1.1 "Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;white-space:nowrap;color:#ece8e1}
+.top .views{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;margin-left:auto;min-width:0;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:flex-end;-webkit-overflow-scrolling:touch}
+.top .views a{white-space:nowrap;flex:none}.top .views::-webkit-scrollbar{display:none}
+@media (max-width:560px){
+  .top__in{padding:8px 12px;gap:8px}
+  .top__home .top__name{display:none}
+  .top__home img{width:36px;height:36px}
+  .top .views{justify-content:flex-start}
+}
+</style>
+<!-- chl-bc -->
+<style id="chl-bc">
+:root{--chl-nav-h:calc(52px + env(safe-area-inset-top,0px))}
+.bc,.bc *{box-sizing:border-box}
+.bc__badge{display:inline-block;font:700 10px/1 "Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(180deg,#e2b768,#c99a4b);color:#16130d;padding:5px 9px;border-radius:999px;flex:none}
+.bc{position:sticky;top:0;z-index:40;background:#141414;border-bottom:1px solid rgba(224,165,38,.42);padding-top:env(safe-area-inset-top,0px);color:#e9e6df;-webkit-text-size-adjust:100%;overflow:hidden}
+.bc__in{max-width:1180px;margin:0 auto;padding:0 24px;height:52px;display:flex;align-items:center;gap:12px;min-width:0}
+.bc__list{display:flex;align-items:center;min-width:0;flex:1;list-style:none;margin:0;padding:0;font:650 15px/1.2 "Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;white-space:nowrap}
+.bc__item{display:flex;align-items:center;min-width:0;flex:none}
+.bc__item+.bc__item::before{content:"›";content:"›"/"";color:#8f8778;font-size:20px;line-height:1;margin:0 10px;flex:none}
+.bc__item a,.bc__item span.cur{display:inline-flex;align-items:center;gap:9px;min-height:44px;color:#e0a526;text-decoration:none;border-radius:6px;padding:0 2px}
+.bc__item a:hover{color:#ffd36b;text-decoration:underline;text-underline-offset:4px}
+.bc__item [aria-current="page"],.bc__item span.cur{color:#f3f0ea}
+.bc__item a[aria-current="page"]:hover{color:#fff}
+.bc__item a:focus-visible{outline:2px solid #e0a526;outline-offset:2px}
+.bc__item--home a{color:#f3f0ea}
+.bc__item--home img{height:28px;width:auto;display:block;max-width:none}
+.bc__labs{color:#e0a526}
+.bc__dots{display:none}
+.bc__item--module,.bc__item--extra{flex:0 1 auto}
+.bc__item--module a,.bc__item--extra a,.bc__item--extra span.cur{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:44px}
+.bc__item--extra:last-child{flex-shrink:1;min-width:3em}
+.bc__item--module{flex-shrink:3;min-width:2.5em}
+@media (max-width:560px){
+  .bc__in{padding:0 12px;gap:8px}
+  .bc__list{font-size:14px}
+  .bc__item+.bc__item::before{margin:0 6px}
+  .bc__item--home .bc__t{display:none}
+  .bc--deep .bc__item--academy .bc__t{display:none}
+  .bc--deep .bc__item--academy .bc__dots{display:inline;padding:0 6px;font-size:18px}
+  .bc--deep .bc__badge{display:none}
+  .bc__badge{font-size:9px;padding:4px 7px;letter-spacing:.12em}
+  .bc__item--module{flex-shrink:0}
+  .bc__item--academy{flex:0 1 auto;min-width:2.2em}
+  .bc__item--academy a{min-width:0;overflow:hidden}
+  .bc__item--academy .bc__t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bc--deep .bc__item--module{flex-shrink:0}
+  .bc--deeper .bc__item--module{display:none}
+}
+</style>
+<nav class="bc" aria-label="Breadcrumb">
+  <div class="bc__in">
+    <ol class="bc__list" id="bc">
+      <li class="bc__item bc__item--home"><a href="https://codex-hive.com" aria-label="Codex Hive Labs, codex-hive.com"><picture><source type="image/webp" srcset="/chl-assets/codex-hive-mark-1x.webp 1x, /chl-assets/codex-hive-mark-2x.webp 2x, /chl-assets/codex-hive-mark-3x.webp 3x"><img src="/chl-assets/codex-hive-mark-1x.png" srcset="/chl-assets/codex-hive-mark-1x.png 1x, /chl-assets/codex-hive-mark-2x.png 2x, /chl-assets/codex-hive-mark-3x.png 3x" width="26" height="32" alt="" decoding="async"></picture><span class="bc__t">Codex Hive <span class="bc__labs">Labs</span></span></a></li>
+      <li class="bc__item bc__item--academy"><a href="/" aria-label="Hive Academy"><span class="bc__t">Hive Academy</span><span class="bc__dots" aria-hidden="true">…</span></a></li>
+      <li class="bc__item bc__item--module"><a href="/modules/rosetta-logos/" aria-current="page">Rosetta Logos</a></li>
+    </ol>
+    <span class="bc__badge">Preview</span>
+  </div>
+</nav>
+<!-- /chl-bc -->
+<header class="top">
+  <div class="top__in">
+    <a class="top__home" href="/modules/rosetta-logos/" aria-label="Rosetta Logos">
+      <img src="/assets/img/rosetta-logos-emblem-240.webp" srcset="/assets/img/rosetta-logos-emblem-240.webp 1x, /assets/img/rosetta-logos-emblem-480.webp 2x" width="40" height="40" alt="">
+      <span class="top__name">Rosetta Logos</span>
+    </a>
+    <nav class="views" aria-label="Views">
+      <a href="#chart">Chart</a><a href="#languages">Languages</a><a href="#concepts">Concepts</a><a href="#root">Root</a><a href="#world">World</a><a href="#findings">Findings</a>
+    </nav>
+  </div>
+</header>
+'''
 brand = re.search(r'<div class="brandbar">.*?</div></div></div>', head, re.S).group(0)
-head = sub1(brand, nav + '''
-<div class="ac-head"><div class="ac-head__in">
-  <a class="ac-head__logo" href="/" aria-label="Hive Academy home"><img src="/assets/brand/academy-wordmark-dark-360.webp" srcset="/assets/brand/academy-wordmark-dark-360.webp 1x, /assets/brand/academy-wordmark-dark-720.webp 2x" width="360" height="53" alt="Hive Academy, a Codex Hive division"></a>
-  <div class="ac-head__mod">Module · Rosetta Logos<br><a href="/">← Hive Academy</a></div>
-</div></div>''', head)
+# If a views nav is already in the source header, drop it; the compact bar carries the tabs.
+head = re.sub(
+    r'\s*<nav class="views" aria-label="Views">.*?</nav>',
+    "",
+    head,
+    count=1,
+    flags=re.S,
+)
+head = sub1(brand, ROSETTA_BC, head)
+# The in-page kick is redundant once the breadcrumb names Hive Academy / Rosetta Logos.
+head = head.replace('<p class="kick">Hive Academy · Module</p>\n      ', "", 1)
+
 # preliminary note (no new claims)
 head = sub1('  <div class="facts" id="facts"></div>',
 '''  <p class="prelim" role="note"><span><b>Preliminary.</b> This is an early research module. Its findings are preliminary and have not been peer-reviewed.</span></p>

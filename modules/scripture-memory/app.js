@@ -275,7 +275,7 @@
     setTab("progress");
     crumbs([{ t: "My stars" }]);
     var h = "<h1>My stars</h1>" + '<div class="prog">' +
-      '<div class="stat"><b>' + totalStars() + '</b><span>stars of ' + ITEMS.length * 3 + "</span></div>" +
+      '<div class="stat"><b>' + totalStars() + '</b><span>' + (totalStars() === 1 ? "star" : "stars") + ' of ' + ITEMS.length * 3 + "</span></div>" +
       '<div class="stat"><b>' + learnedCount() + '</b><span>' + (learnedCount() === 1 ? "verse" : "verses") + ' learned (3 stars)</span></div>' +
       '<div class="stat"><b>' + streak() + '</b><span>day streak' + (streak() ? "" : ": play today to start one") + "</span></div></div>" +
       '<table class="table"><caption class="sr-only">Stars for each verse</caption><thead><tr><th scope="col">Story</th><th scope="col" class="hide-s">Verse</th><th scope="col">Stars</th></tr></thead><tbody>';
