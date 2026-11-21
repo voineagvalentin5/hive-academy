@@ -7,7 +7,7 @@
     order: { name: "Words in order", icon: "🧩", how: "Tap the words in the right order." },
     letters: { name: "First letters", icon: "🔤", how: "Say the verse out loud. Only the first letters are shown. Tap a letter to peek at its word." }
   };
-  var STOP = "a an and the of to in on for is it be as at by he she i me my you your his her him we us our they them their this that who which with from not was are has have had will shall so but or all any thing too then even what there".split(" ");
+  var STOP = "a an and the of to in on for is it be as at by he she i me my you your his her him we us our they them their this that who which with from not was are has have had will shall so but or all any thing too then even what there ye thou thee thy hath unto shall".split(" ");
   var app = document.getElementById("app"), say = document.getElementById("say");
   var DATA = null, S = load();
 
@@ -15,7 +15,7 @@
     var s = null;
     try { s = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { s = null; }
     if (!s || typeof s !== "object") s = {};
-    s.tr = s.tr === "KJV" ? "KJV" : "WEB";
+    s.tr = s.tr === "KJV" || s.tr === "WEB" ? s.tr : null; /* default comes from the data file (KJV) */
     s.stars = s.stars && typeof s.stars === "object" ? s.stars : {};
     s.days = Array.isArray(s.days) ? s.days : [];
     return s;
@@ -87,7 +87,7 @@
     var h = '<a class="crumb" href="#/"><span aria-hidden="true">←</span> All stories</a>' +
       '<div class="story"><article class="panel" aria-labelledby="st-title"><p class="kick">Story ' + s.order + " of " + DATA.stories.length + "</p>" +
       '<h1 id="st-title">' + esc(s.title) + '</h1><p class="retell">' + esc(s.retelling) + "</p>" +
-      '<p class="passage">Read it in the Bible: <strong>' + esc(s.passage) + "</strong></p></article>" +
+      '<p class="passage">Read it in the Bible: <strong>' + esc(s.passage) + "</strong></p>" + moreHtml(s) + "</article>" +
       '<section class="verse" aria-labelledby="kv"><p class="kick" id="kv">Key verse</p><blockquote><p style="margin:0">“' + esc(v.text) + "”</p></blockquote>" +
       "<cite>" + refLine(s) + "</cite>" +
       '<ul class="games" aria-label="Verse games">';
@@ -102,6 +102,19 @@
     focusTitle(s.title);
   }
 
+  function moreHtml(s) {
+    var h = "";
+    (s.more || []).forEach(function (m) {
+      var q = m[S.tr];
+      h += '<aside class="more" aria-label="' + esc(m.label) + '"><p class="kick">' + esc(m.label) + "</p><blockquote><p>“" + esc(q.text) + "”</p></blockquote>" +
+        "<cite>" + esc(m.ref) + " (" + S.tr + ")" + (q.partOfVerse ? ' <span class="part">Part of the verse</span>' : "") + "</cite></aside>";
+    });
+    if (s.pointTo && s.pointTo !== s.id) {
+      var t = story(s.pointTo);
+      if (t) h += '<p class="point"><a href="#/story/' + t.id + '">' + ((s.more || []).some(function (m) { return m.ref === t.verse.ref; }) ? "Read the story of " + esc(t.title) : "What does the Bible say we should do? Read " + esc(t.title) + " (" + esc(t.verse.ref) + ")") + ' <span aria-hidden="true">→</span></a></p>';
+    }
+    return h;
+  }
   function winHtml(s, mode, fresh) {
     var n = starCount(s.id);
     var next = Object.keys(MODES).find(function (m) { return !(S.stars[s.id] || {})[m]; });
@@ -213,7 +226,7 @@
     setTab("progress");
     var h = "<h1>My stars</h1>" + '<div class="prog">' +
       '<div class="stat"><b>' + totalStars() + '</b><span>stars of ' + DATA.stories.length * 3 + "</span></div>" +
-      '<div class="stat"><b>' + learnedCount() + '</b><span>verses learned (3 stars)</span></div>' +
+      '<div class="stat"><b>' + learnedCount() + '</b><span>' + (learnedCount() === 1 ? "verse" : "verses") + ' learned (3 stars)</span></div>' +
       '<div class="stat"><b>' + streak() + '</b><span>day streak' + (streak() ? "" : ": play today to start one") + "</span></div></div>" +
       '<table class="table"><caption class="sr-only">Stars for each verse</caption><thead><tr><th scope="col">Story</th><th scope="col" class="hide-s">Verse</th><th scope="col">Stars</th></tr></thead><tbody>';
     DATA.stories.forEach(function (s) {
@@ -241,16 +254,16 @@
     if (p[0] === "progress") return progress();
     home();
   }
-  function setTr(t) {
-    S.tr = t; save();
+  function setTr(t, persist) {
+    S.tr = t; if (persist) save();
     document.querySelectorAll(".tr button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.tr === t ? "true" : "false"); });
     var tr = DATA && DATA.translations[t];
-    if (tr) document.getElementById("trnote").innerHTML = "Scripture quotations are from the <strong>" + esc(tr.name) + "</strong>, " + esc(tr.license) + '. Text from <a href="' + esc(tr.url) + '" rel="noopener">' + esc(tr.source) + "</a>. Verses are quoted exactly; where only part of a verse is used, it says so. The short story retellings are written for children and are not quotations.";
+    if (tr) document.getElementById("trnote").innerHTML = "Scripture quotations are from the <strong>" + esc(tr.name) + "</strong>, " + esc(tr.license) + '. Text from <a href="' + esc(tr.url) + '" rel="noopener">' + esc(tr.source) + "</a>. Verses are quoted exactly; where only part of a verse is used, it says so. The short story retellings are written for children and are not quotations; each one follows the Bible passage listed with it.";
   }
-  document.querySelectorAll(".tr button").forEach(function (b) { b.addEventListener("click", function () { setTr(b.dataset.tr); route(); announce(DATA.translations[b.dataset.tr].name); }); });
+  document.querySelectorAll(".tr button").forEach(function (b) { b.addEventListener("click", function () { setTr(b.dataset.tr, true); route(); announce(DATA.translations[b.dataset.tr].name); }); });
   window.addEventListener("hashchange", route);
 
   fetch("data/stories.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
-    DATA = d; setTr(S.tr); route();
+    DATA = d; setTr(S.tr || d.defaultTranslation || "KJV"); route();
   }).catch(function () { app.innerHTML = '<p class="note">The stories could not be loaded. Please refresh the page.</p>'; });
 })();

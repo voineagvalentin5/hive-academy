@@ -6,22 +6,22 @@
   "status": "preview"
  },
  "translations": {
-  "WEB": {
-   "name": "World English Bible",
-   "short": "WEB",
-   "license": "public domain",
-   "source": "eBible.org, engwebp (2020 stable text)",
-   "url": "https://ebible.org/web/"
-  },
   "KJV": {
    "name": "King James Version (1769)",
    "short": "KJV",
    "license": "public domain outside the UK",
    "source": "eBible.org, eng-kjv",
    "url": "https://ebible.org/kjv/"
+  },
+  "WEB": {
+   "name": "World English Bible",
+   "short": "WEB",
+   "license": "public domain",
+   "source": "eBible.org, engwebp (2020 stable text)",
+   "url": "https://ebible.org/web/"
   }
  },
- "defaultTranslation": "WEB",
+ "defaultTranslation": "KJV",
  "stories": [
   {
    "id": "creation",
@@ -29,7 +29,7 @@
    "title": "God Makes the World",
    "testament": "OT",
    "passage": "Genesis 1:1–2:3",
-   "retelling": "In the beginning, God made the heavens and the earth. God spoke, and there was light. Over six days God made the sky, the land and the seas, plants, the sun, moon and stars, fish, birds and animals, and then he made people in his own image. God saw everything he had made, and it was very good, and on the seventh day he rested.",
+   "retelling": "In the beginning God created the heaven and the earth. God spoke, and there was light. God made the sky, the dry land and the seas, the plants, the sun, the moon and the stars, the fish, the birds and the animals. Then God created man in his own image, male and female. God saw everything he had made, and it was very good, and on the seventh day God rested.",
    "verse": {
     "ref": "Genesis 1:1",
     "osis": "Gen.1.1",
@@ -43,7 +43,9 @@
      "partOfVerse": false,
      "fullVerse": "In the beginning God created the heaven and the earth."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "noah",
@@ -51,7 +53,7 @@
    "title": "Noah and the Ark",
    "testament": "OT",
    "passage": "Genesis 6:9–9:17",
-   "retelling": "Noah walked with God. God told Noah to build a big ark and to bring his family and the animals inside. Rain fell for forty days and forty nights, and the flood covered the earth, but God kept everyone in the ark safe. Afterward, God put his rainbow in the clouds as a sign of his promise never again to destroy the earth with a flood.",
+   "retelling": "Noah was a just man, and Noah walked with God. God told Noah to make an ark, and to come into it with his wife, his sons and his sons' wives, and to bring two of every kind of living thing. Rain fell on the earth forty days and forty nights, and the flood covered the earth, and Noah and everyone with him in the ark stayed alive. Afterward God set his bow in the cloud as a token of his covenant: there will never again be a flood to destroy the earth.",
    "verse": {
     "ref": "Genesis 9:13",
     "osis": "Gen.9.13",
@@ -65,15 +67,17 @@
      "partOfVerse": false,
      "fullVerse": "I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "abraham",
    "order": 3,
    "title": "God's Promise to Abraham",
    "testament": "OT",
-   "passage": "Genesis 12:1–7; 15:5–6; 18:1–14; 21:1–3",
-   "retelling": "God told Abraham to leave his home and go to a land God would show him, and Abraham went. God told him to look at the stars and promised him children as many as the stars, and Abraham believed God. Abraham and Sarah were very old, but the LORD said Sarah would have a son. God kept his promise, and their son Isaac was born.",
+   "passage": "Genesis 12:1–4; 15:5–6; 17:5; 18:1–14; 21:1–3",
+   "retelling": "The LORD told Abram to leave his country and go to a land the LORD would show him, and Abram went. God told him to look up at the stars and count them, and said his seed, the family that would come from him, would be like that. Abram believed in the LORD, and God later changed his name to Abraham. Abraham and Sarah were very old, but the LORD said Sarah would have a son. The LORD did for Sarah as he had spoken, and their son Isaac was born.",
    "verse": {
     "ref": "Genesis 18:14",
     "osis": "Gen.18.14",
@@ -87,15 +91,17 @@
      "partOfVerse": true,
      "fullVerse": "Is any thing too hard for the LORD? At the time appointed I will return unto thee, according to the time of life, and Sarah shall have a son."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "joseph",
    "order": 4,
-   "title": "Joseph Forgives His Brothers",
+   "title": "Joseph and His Brothers",
    "testament": "OT",
    "passage": "Genesis 37; 39–45; 50:15–21",
-   "retelling": "Joseph's brothers were jealous of him, and they sold him, and he was taken to Egypt. Even in prison, the LORD was with Joseph. God helped Joseph explain Pharaoh's dreams, and Pharaoh put him in charge of storing food before a famine. When his brothers came to Egypt for food, Joseph forgave them and was kind to them.",
+   "retelling": "Joseph's brothers hated him and envied him, and they sold him, and he was taken into Egypt. Even in prison, the LORD was with Joseph. Joseph told Pharaoh that God would give the answer to his dreams, and Pharaoh set Joseph over all the land of Egypt, and Joseph gathered up food before the famine came. When his brothers came to Egypt to buy food, Joseph told them who he was, and he kissed them and wept. Later he told them not to be afraid, and he comforted them and spoke kindly to them.",
    "verse": {
     "ref": "Genesis 50:20",
     "osis": "Gen.50.20",
@@ -109,7 +115,9 @@
      "partOfVerse": true,
      "fullVerse": "But as for you, ye thought evil against me; but God meant it unto good, to bring to pass, as it is this day, to save much people alive."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "red-sea",
@@ -117,7 +125,7 @@
    "title": "Moses and the Red Sea",
    "testament": "OT",
    "passage": "Exodus 14",
-   "retelling": "God led his people, Israel, out of Egypt, but Pharaoh and his army chased them to the edge of the sea. Moses told the people not to be afraid. Moses stretched out his hand over the sea, the LORD sent a strong east wind, and the people walked through the sea on dry ground. That day the LORD saved Israel from the Egyptians.",
+   "retelling": "The LORD brought the children of Israel out of Egypt, but Pharaoh and his army chased after them and came near them by the sea. Moses told the people not to be afraid. Moses stretched out his hand over the sea, the LORD sent a strong east wind, and the people walked through the middle of the sea on dry ground, with the waters like a wall on each side. That day the LORD saved Israel from the Egyptians.",
    "verse": {
     "ref": "Exodus 14:14",
     "osis": "Exod.14.14",
@@ -131,7 +139,9 @@
      "partOfVerse": false,
      "fullVerse": "The LORD shall fight for you, and ye shall hold your peace."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "david",
@@ -139,7 +149,7 @@
    "title": "David and Goliath",
    "testament": "OT",
    "passage": "1 Samuel 17",
-   "retelling": "A giant named Goliath dared Israel's army to fight him, and the soldiers were afraid. David, a young shepherd, said the LORD who saved him from the lion and the bear would save him from this Philistine too. David took his sling and five smooth stones and went out in the name of the LORD. His stone struck Goliath, and the giant fell.",
+   "retelling": "A Philistine giant named Goliath defied the armies of Israel and called for a man to fight him, and the men of Israel were afraid. David was a youth who kept his father's sheep. He said the LORD who saved him from the lion and the bear would save him from this Philistine too. David took his staff, his sling and five smooth stones from the brook, and he came to Goliath in the name of the LORD. David's stone struck Goliath in the forehead, and the giant fell.",
    "verse": {
     "ref": "1 Samuel 17:47",
     "osis": "1Sam.17.47",
@@ -153,7 +163,9 @@
      "partOfVerse": true,
      "fullVerse": "And all this assembly shall know that the LORD saveth not with sword and spear: for the battle is the LORD’s, and he will give you into our hands."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "daniel",
@@ -161,7 +173,7 @@
    "title": "Daniel and the Lions",
    "testament": "OT",
    "passage": "Daniel 6",
-   "retelling": "Daniel prayed to God three times every day, even after a new law said no one could pray to anyone but the king. Daniel was thrown into a den of lions. God sent his angel and shut the lions' mouths. In the morning Daniel was taken out of the den, and he was not hurt at all, because he trusted in his God.",
+   "retelling": "A new law said that for thirty days no one could pray to any god or man except the king. Daniel still knelt and prayed and gave thanks to his God three times a day, as he always had, and he was thrown into the den of lions. God sent his angel and shut the lions' mouths. Early in the morning Daniel was taken up out of the den, and he was not hurt at all, because he believed in his God.",
    "verse": {
     "ref": "Daniel 6:22",
     "osis": "Dan.6.22",
@@ -175,15 +187,17 @@
      "partOfVerse": true,
      "fullVerse": "My God hath sent his angel, and hath shut the lions’ mouths, that they have not hurt me: forasmuch as before him innocency was found in me; and also before thee, O king, have I done no hurt."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "jonah",
    "order": 8,
-   "title": "Jonah and the Big Fish",
+   "title": "Jonah and the Great Fish",
    "testament": "OT",
    "passage": "Jonah 1–3",
-   "retelling": "God told Jonah to go to the city of Nineveh, but Jonah ran away on a ship. A great storm came, Jonah was thrown into the sea, and the LORD sent a huge fish to swallow him. Jonah prayed inside the fish for three days and three nights, and the fish put him out on dry land. Then Jonah went to Nineveh, the people turned from their evil ways, and God had mercy on them.",
+   "retelling": "God told Jonah to go to the great city of Nineveh, but Jonah ran away from the LORD on a ship. The LORD sent a great wind, Jonah was cast into the sea, and the LORD prepared a great fish to swallow him. Jonah was in the belly of the fish three days and three nights, and he prayed to the LORD from inside the fish. The LORD spoke to the fish, and it put Jonah out on dry land. Then Jonah went to Nineveh, the people believed God and turned from their evil way, and God did not destroy the city.",
    "verse": {
     "ref": "Jonah 2:9",
     "osis": "Jonah.2.9",
@@ -197,15 +211,17 @@
      "partOfVerse": true,
      "fullVerse": "But I will sacrifice unto thee with the voice of thanksgiving; I will pay that that I have vowed. Salvation is of the LORD."
     }
-   }
+   },
+   "more": [],
+   "pointTo": "pentecost"
   },
   {
    "id": "jesus-born",
    "order": 9,
    "title": "Jesus Is Born",
    "testament": "NT",
-   "passage": "Luke 2:1–20",
-   "retelling": "Mary and Joseph traveled to Bethlehem, and there Mary gave birth to her son, Jesus. She wrapped him in cloth and laid him in a manger, because there was no room for them in the inn. An angel told shepherds the good news. They hurried, found the baby just as they had been told, and went back praising God.",
+   "passage": "Luke 2:1–20; Matthew 1:21–23",
+   "retelling": "Mary and Joseph went to Bethlehem, and there Mary gave birth to her firstborn son. She wrapped him in swaddling clothes and laid him in a manger, because there was no room for them in the inn. An angel of the Lord told shepherds the good news, and they came quickly and found the baby, just as they had been told. His name is Jesus, because he shall save his people from their sins, and the Bible says he is Emmanuel, which means God with us.",
    "verse": {
     "ref": "Luke 2:11",
     "osis": "Luke.2.11",
@@ -219,7 +235,23 @@
      "partOfVerse": false,
      "fullVerse": "For unto you is born this day in the city of David a Saviour, which is Christ the Lord."
     }
-   }
+   },
+   "more": [
+    {
+     "label": "Who is Jesus?",
+     "ref": "1 Timothy 3:16",
+     "osis": "1Tim.3.16",
+     "WEB": {
+      "text": "God was revealed in the flesh",
+      "partOfVerse": true
+     },
+     "KJV": {
+      "text": "God was manifest in the flesh",
+      "partOfVerse": true
+     }
+    }
+   ],
+   "pointTo": "pentecost"
   },
   {
    "id": "storm",
@@ -227,7 +259,7 @@
    "title": "Jesus Calms the Storm",
    "testament": "NT",
    "passage": "Mark 4:35–41",
-   "retelling": "Jesus and his disciples were crossing the lake in a boat, and Jesus fell asleep on a cushion. A big windstorm came, the waves filled the boat, and the disciples woke him up. Jesus spoke to the wind and the sea, the wind stopped, and there was a great calm.",
+   "retelling": "Jesus and his disciples got into a ship to cross over the sea, and Jesus was asleep on a pillow in the back of the ship. A great storm of wind came, the waves beat into the ship until it was full, and the disciples woke him. Jesus rebuked the wind and said to the sea, Peace, be still. The wind stopped, and there was a great calm.",
    "verse": {
     "ref": "Mark 4:41",
     "osis": "Mark.4.41",
@@ -241,7 +273,23 @@
      "partOfVerse": true,
      "fullVerse": "And they feared exceedingly, and said one to another, What manner of man is this, that even the wind and the sea obey him?"
     }
-   }
+   },
+   "more": [
+    {
+     "label": "Who is Jesus?",
+     "ref": "Colossians 2:9",
+     "osis": "Col.2.9",
+     "WEB": {
+      "text": "For in him all the fullness of the Deity dwells bodily",
+      "partOfVerse": true
+     },
+     "KJV": {
+      "text": "For in him dwelleth all the fulness of the Godhead bodily.",
+      "partOfVerse": false
+     }
+    }
+   ],
+   "pointTo": null
   },
   {
    "id": "five-thousand",
@@ -249,7 +297,7 @@
    "title": "Jesus Feeds Five Thousand",
    "testament": "NT",
    "passage": "John 6:1–14, 35",
-   "retelling": "A great crowd followed Jesus. A boy there had five barley loaves and two fish. Jesus gave thanks and shared out the bread and fish, and about five thousand men sat down and ate as much as they wanted. Afterward the disciples filled twelve baskets with the pieces left over.",
+   "retelling": "A great multitude followed Jesus. A lad there had five barley loaves and two small fishes. Jesus gave thanks and gave the bread and fish to his disciples to hand out, and about five thousand men sat down and ate as much as they wanted. Afterward the disciples gathered up the pieces that were left and filled twelve baskets. Later Jesus told the people that he is the bread of life.",
    "verse": {
     "ref": "John 6:35",
     "osis": "John.6.35",
@@ -263,15 +311,17 @@
      "partOfVerse": true,
      "fullVerse": "And Jesus said unto them, I am the bread of life: he that cometh to me shall never hunger; and he that believeth on me shall never thirst."
     }
-   }
+   },
+   "more": [],
+   "pointTo": null
   },
   {
    "id": "risen",
    "order": 12,
    "title": "Jesus Is Risen",
    "testament": "NT",
-   "passage": "Matthew 27:57–28:10",
-   "retelling": "After Jesus died on the cross, his body was laid in a tomb, and a big stone was rolled in front of it. Early on the first day of the week, women came to see the tomb, and an angel told them not to be afraid, because Jesus had risen. As they ran to tell his disciples, Jesus met them, and they worshiped him.",
+   "passage": "Matthew 27:57–28:10; Acts 2:38",
+   "retelling": "After Jesus was crucified and died, Joseph of Arimathaea laid his body in a new tomb and rolled a great stone to the door. Early on the first day of the week, Mary Magdalene and the other Mary came to see the tomb. An angel told them not to be afraid, because Jesus had risen, just as he said. As they ran to tell his disciples, Jesus met them, and they worshipped him. Later, on the day of Pentecost, Peter told the people what they should do: repent (turn away from sin), be baptized in the name of Jesus Christ, and receive the gift of the Holy Ghost.",
    "verse": {
     "ref": "Matthew 28:6",
     "osis": "Matt.28.6",
@@ -285,7 +335,61 @@
      "partOfVerse": true,
      "fullVerse": "He is not here: for he is risen, as he said. Come, see the place where the Lord lay."
     }
-   }
+   },
+   "more": [
+    {
+     "label": "What should we do?",
+     "ref": "Acts 2:38",
+     "osis": "Acts.2.38",
+     "WEB": {
+      "text": "Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of sins, and you will receive the gift of the Holy Spirit.",
+      "partOfVerse": true
+     },
+     "KJV": {
+      "text": "Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",
+      "partOfVerse": true
+     }
+    }
+   ],
+   "pointTo": "pentecost"
+  },
+  {
+   "id": "pentecost",
+   "order": 13,
+   "title": "The Day of Pentecost",
+   "testament": "NT",
+   "passage": "Acts 1:4–5; 2:1–41",
+   "retelling": "Jesus told his disciples to wait, because they would be baptized with the Holy Ghost. When the day of Pentecost came, they were all together in one place. Suddenly a sound from heaven like a rushing mighty wind filled the house, and tongues like fire sat on each of them. They were all filled with the Holy Ghost and began to speak with other tongues, as the Spirit gave them utterance. Peter preached about Jesus, and the people asked, what shall we do? Peter told them, and about three thousand people who gladly received his word were baptized that same day.",
+   "verse": {
+    "ref": "Acts 2:38",
+    "osis": "Acts.2.38",
+    "WEB": {
+     "text": "Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of sins, and you will receive the gift of the Holy Spirit.",
+     "partOfVerse": true,
+     "fullVerse": "Peter said to them, “Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of sins, and you will receive the gift of the Holy Spirit."
+    },
+    "KJV": {
+     "text": "Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",
+     "partOfVerse": true,
+     "fullVerse": "Then Peter said unto them, Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost."
+    }
+   },
+   "more": [
+    {
+     "label": "What happened that day",
+     "ref": "Acts 2:4",
+     "osis": "Acts.2.4",
+     "WEB": {
+      "text": "They were all filled with the Holy Spirit and began to speak with other languages, as the Spirit gave them the ability to speak.",
+      "partOfVerse": false
+     },
+     "KJV": {
+      "text": "And they were all filled with the Holy Ghost, and began to speak with other tongues, as the Spirit gave them utterance.",
+      "partOfVerse": false
+     }
+    }
+   ],
+   "pointTo": null
   }
  ]
 }

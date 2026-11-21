@@ -4,4 +4,4 @@ Static site for academy.codex-hive.com. The home page is a public preview of wha
 
 - `tools/make_logos.py` builds web logo assets from the official Hive Academy files.
 - `tools/make_og.py` builds the share image.
-- `tools/build_scripture_memory.py` builds `modules/scripture-memory/data/stories.json` (Hive Kids Bible) from the public-domain WEB (eBible.org engwebp) and KJV (eBible.org eng-kjv, via Hive Scribe) files, checks every memory verse is quoted exactly, and copies the shared nav into the module page. Progress is kept in localStorage only.
+- `tools/build_scripture_memory.py` builds `modules/scripture-memory/data/stories.json` (Hive Kids Bible) from the public-domain KJV (default; eBible.org eng-kjv, via Hive Scribe) and WEB (option; eBible.org engwebp) files, checks every key verse and supporting quote is quoted exactly, and copies the shared nav into the module page. Retellings stay with the scripture text of the passage listed with each story, in line with Apostolic Pentecostal teaching (Acts 2:38). Progress is kept in localStorage only.
