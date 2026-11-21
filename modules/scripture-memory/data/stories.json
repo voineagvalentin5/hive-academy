@@ -1,0 +1,291 @@
+{
+ "schema": 1,
+ "module": {
+  "id": "scripture-memory",
+  "name": "Hive Kids Bible",
+  "status": "preview"
+ },
+ "translations": {
+  "WEB": {
+   "name": "World English Bible",
+   "short": "WEB",
+   "license": "public domain",
+   "source": "eBible.org, engwebp (2020 stable text)",
+   "url": "https://ebible.org/web/"
+  },
+  "KJV": {
+   "name": "King James Version (1769)",
+   "short": "KJV",
+   "license": "public domain outside the UK",
+   "source": "eBible.org, eng-kjv",
+   "url": "https://ebible.org/kjv/"
+  }
+ },
+ "defaultTranslation": "WEB",
+ "stories": [
+  {
+   "id": "creation",
+   "order": 1,
+   "title": "God Makes the World",
+   "testament": "OT",
+   "passage": "Genesis 1:1–2:3",
+   "retelling": "In the beginning, God made the heavens and the earth. God spoke, and there was light. Over six days God made the sky, the land and the seas, plants, the sun, moon and stars, fish, birds and animals, and then he made people in his own image. God saw everything he had made, and it was very good, and on the seventh day he rested.",
+   "verse": {
+    "ref": "Genesis 1:1",
+    "osis": "Gen.1.1",
+    "WEB": {
+     "text": "In the beginning, God created the heavens and the earth.",
+     "partOfVerse": false,
+     "fullVerse": "In the beginning, God created the heavens and the earth."
+    },
+    "KJV": {
+     "text": "In the beginning God created the heaven and the earth.",
+     "partOfVerse": false,
+     "fullVerse": "In the beginning God created the heaven and the earth."
+    }
+   }
+  },
+  {
+   "id": "noah",
+   "order": 2,
+   "title": "Noah and the Ark",
+   "testament": "OT",
+   "passage": "Genesis 6:9–9:17",
+   "retelling": "Noah walked with God. God told Noah to build a big ark and to bring his family and the animals inside. Rain fell for forty days and forty nights, and the flood covered the earth, but God kept everyone in the ark safe. Afterward, God put his rainbow in the clouds as a sign of his promise never again to destroy the earth with a flood.",
+   "verse": {
+    "ref": "Genesis 9:13",
+    "osis": "Gen.9.13",
+    "WEB": {
+     "text": "I set my rainbow in the cloud, and it will be a sign of a covenant between me and the earth.",
+     "partOfVerse": false,
+     "fullVerse": "I set my rainbow in the cloud, and it will be a sign of a covenant between me and the earth."
+    },
+    "KJV": {
+     "text": "I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth.",
+     "partOfVerse": false,
+     "fullVerse": "I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth."
+    }
+   }
+  },
+  {
+   "id": "abraham",
+   "order": 3,
+   "title": "God's Promise to Abraham",
+   "testament": "OT",
+   "passage": "Genesis 12:1–7; 15:5–6; 18:1–14; 21:1–3",
+   "retelling": "God told Abraham to leave his home and go to a land God would show him, and Abraham went. God told him to look at the stars and promised him children as many as the stars, and Abraham believed God. Abraham and Sarah were very old, but the LORD said Sarah would have a son. God kept his promise, and their son Isaac was born.",
+   "verse": {
+    "ref": "Genesis 18:14",
+    "osis": "Gen.18.14",
+    "WEB": {
+     "text": "Is anything too hard for the LORD?",
+     "partOfVerse": true,
+     "fullVerse": "Is anything too hard for the LORD? At the set time I will return to you, when the season comes around, and Sarah will have a son.”"
+    },
+    "KJV": {
+     "text": "Is any thing too hard for the LORD?",
+     "partOfVerse": true,
+     "fullVerse": "Is any thing too hard for the LORD? At the time appointed I will return unto thee, according to the time of life, and Sarah shall have a son."
+    }
+   }
+  },
+  {
+   "id": "joseph",
+   "order": 4,
+   "title": "Joseph Forgives His Brothers",
+   "testament": "OT",
+   "passage": "Genesis 37; 39–45; 50:15–21",
+   "retelling": "Joseph's brothers were jealous of him, and they sold him, and he was taken to Egypt. Even in prison, the LORD was with Joseph. God helped Joseph explain Pharaoh's dreams, and Pharaoh put him in charge of storing food before a famine. When his brothers came to Egypt for food, Joseph forgave them and was kind to them.",
+   "verse": {
+    "ref": "Genesis 50:20",
+    "osis": "Gen.50.20",
+    "WEB": {
+     "text": "As for you, you meant evil against me, but God meant it for good",
+     "partOfVerse": true,
+     "fullVerse": "As for you, you meant evil against me, but God meant it for good, to save many people alive, as is happening today."
+    },
+    "KJV": {
+     "text": "But as for you, ye thought evil against me; but God meant it unto good",
+     "partOfVerse": true,
+     "fullVerse": "But as for you, ye thought evil against me; but God meant it unto good, to bring to pass, as it is this day, to save much people alive."
+    }
+   }
+  },
+  {
+   "id": "red-sea",
+   "order": 5,
+   "title": "Moses and the Red Sea",
+   "testament": "OT",
+   "passage": "Exodus 14",
+   "retelling": "God led his people, Israel, out of Egypt, but Pharaoh and his army chased them to the edge of the sea. Moses told the people not to be afraid. Moses stretched out his hand over the sea, the LORD sent a strong east wind, and the people walked through the sea on dry ground. That day the LORD saved Israel from the Egyptians.",
+   "verse": {
+    "ref": "Exodus 14:14",
+    "osis": "Exod.14.14",
+    "WEB": {
+     "text": "The LORD will fight for you, and you shall be still.",
+     "partOfVerse": false,
+     "fullVerse": "The LORD will fight for you, and you shall be still.”"
+    },
+    "KJV": {
+     "text": "The LORD shall fight for you, and ye shall hold your peace.",
+     "partOfVerse": false,
+     "fullVerse": "The LORD shall fight for you, and ye shall hold your peace."
+    }
+   }
+  },
+  {
+   "id": "david",
+   "order": 6,
+   "title": "David and Goliath",
+   "testament": "OT",
+   "passage": "1 Samuel 17",
+   "retelling": "A giant named Goliath dared Israel's army to fight him, and the soldiers were afraid. David, a young shepherd, said the LORD who saved him from the lion and the bear would save him from this Philistine too. David took his sling and five smooth stones and went out in the name of the LORD. His stone struck Goliath, and the giant fell.",
+   "verse": {
+    "ref": "1 Samuel 17:47",
+    "osis": "1Sam.17.47",
+    "WEB": {
+     "text": "the battle is the LORD’s",
+     "partOfVerse": true,
+     "fullVerse": "and that all this assembly may know that the LORD doesn’t save with sword and spear; for the battle is the LORD’s, and he will give you into our hand.”"
+    },
+    "KJV": {
+     "text": "the battle is the LORD’s",
+     "partOfVerse": true,
+     "fullVerse": "And all this assembly shall know that the LORD saveth not with sword and spear: for the battle is the LORD’s, and he will give you into our hands."
+    }
+   }
+  },
+  {
+   "id": "daniel",
+   "order": 7,
+   "title": "Daniel and the Lions",
+   "testament": "OT",
+   "passage": "Daniel 6",
+   "retelling": "Daniel prayed to God three times every day, even after a new law said no one could pray to anyone but the king. Daniel was thrown into a den of lions. God sent his angel and shut the lions' mouths. In the morning Daniel was taken out of the den, and he was not hurt at all, because he trusted in his God.",
+   "verse": {
+    "ref": "Daniel 6:22",
+    "osis": "Dan.6.22",
+    "WEB": {
+     "text": "My God has sent his angel, and has shut the lions’ mouths, and they have not hurt me",
+     "partOfVerse": true,
+     "fullVerse": "My God has sent his angel, and has shut the lions’ mouths, and they have not hurt me, because innocence was found in me before him; and also before you, O king, I have done no harm.”"
+    },
+    "KJV": {
+     "text": "My God hath sent his angel, and hath shut the lions’ mouths, that they have not hurt me",
+     "partOfVerse": true,
+     "fullVerse": "My God hath sent his angel, and hath shut the lions’ mouths, that they have not hurt me: forasmuch as before him innocency was found in me; and also before thee, O king, have I done no hurt."
+    }
+   }
+  },
+  {
+   "id": "jonah",
+   "order": 8,
+   "title": "Jonah and the Big Fish",
+   "testament": "OT",
+   "passage": "Jonah 1–3",
+   "retelling": "God told Jonah to go to the city of Nineveh, but Jonah ran away on a ship. A great storm came, Jonah was thrown into the sea, and the LORD sent a huge fish to swallow him. Jonah prayed inside the fish for three days and three nights, and the fish put him out on dry land. Then Jonah went to Nineveh, the people turned from their evil ways, and God had mercy on them.",
+   "verse": {
+    "ref": "Jonah 2:9",
+    "osis": "Jonah.2.9",
+    "WEB": {
+     "text": "Salvation belongs to the LORD.",
+     "partOfVerse": true,
+     "fullVerse": "But I will sacrifice to you with the voice of thanksgiving. I will pay that which I have vowed. Salvation belongs to the LORD.”"
+    },
+    "KJV": {
+     "text": "Salvation is of the LORD.",
+     "partOfVerse": true,
+     "fullVerse": "But I will sacrifice unto thee with the voice of thanksgiving; I will pay that that I have vowed. Salvation is of the LORD."
+    }
+   }
+  },
+  {
+   "id": "jesus-born",
+   "order": 9,
+   "title": "Jesus Is Born",
+   "testament": "NT",
+   "passage": "Luke 2:1–20",
+   "retelling": "Mary and Joseph traveled to Bethlehem, and there Mary gave birth to her son, Jesus. She wrapped him in cloth and laid him in a manger, because there was no room for them in the inn. An angel told shepherds the good news. They hurried, found the baby just as they had been told, and went back praising God.",
+   "verse": {
+    "ref": "Luke 2:11",
+    "osis": "Luke.2.11",
+    "WEB": {
+     "text": "For there is born to you today, in David’s city, a Savior, who is Christ the Lord.",
+     "partOfVerse": false,
+     "fullVerse": "For there is born to you today, in David’s city, a Savior, who is Christ the Lord."
+    },
+    "KJV": {
+     "text": "For unto you is born this day in the city of David a Saviour, which is Christ the Lord.",
+     "partOfVerse": false,
+     "fullVerse": "For unto you is born this day in the city of David a Saviour, which is Christ the Lord."
+    }
+   }
+  },
+  {
+   "id": "storm",
+   "order": 10,
+   "title": "Jesus Calms the Storm",
+   "testament": "NT",
+   "passage": "Mark 4:35–41",
+   "retelling": "Jesus and his disciples were crossing the lake in a boat, and Jesus fell asleep on a cushion. A big windstorm came, the waves filled the boat, and the disciples woke him up. Jesus spoke to the wind and the sea, the wind stopped, and there was a great calm.",
+   "verse": {
+    "ref": "Mark 4:41",
+    "osis": "Mark.4.41",
+    "WEB": {
+     "text": "Who then is this, that even the wind and the sea obey him?",
+     "partOfVerse": true,
+     "fullVerse": "They were greatly afraid and said to one another, “Who then is this, that even the wind and the sea obey him?”"
+    },
+    "KJV": {
+     "text": "What manner of man is this, that even the wind and the sea obey him?",
+     "partOfVerse": true,
+     "fullVerse": "And they feared exceedingly, and said one to another, What manner of man is this, that even the wind and the sea obey him?"
+    }
+   }
+  },
+  {
+   "id": "five-thousand",
+   "order": 11,
+   "title": "Jesus Feeds Five Thousand",
+   "testament": "NT",
+   "passage": "John 6:1–14, 35",
+   "retelling": "A great crowd followed Jesus. A boy there had five barley loaves and two fish. Jesus gave thanks and shared out the bread and fish, and about five thousand men sat down and ate as much as they wanted. Afterward the disciples filled twelve baskets with the pieces left over.",
+   "verse": {
+    "ref": "John 6:35",
+    "osis": "John.6.35",
+    "WEB": {
+     "text": "I am the bread of life.",
+     "partOfVerse": true,
+     "fullVerse": "Jesus said to them, “I am the bread of life. Whoever comes to me will not be hungry, and whoever believes in me will never be thirsty."
+    },
+    "KJV": {
+     "text": "I am the bread of life",
+     "partOfVerse": true,
+     "fullVerse": "And Jesus said unto them, I am the bread of life: he that cometh to me shall never hunger; and he that believeth on me shall never thirst."
+    }
+   }
+  },
+  {
+   "id": "risen",
+   "order": 12,
+   "title": "Jesus Is Risen",
+   "testament": "NT",
+   "passage": "Matthew 27:57–28:10",
+   "retelling": "After Jesus died on the cross, his body was laid in a tomb, and a big stone was rolled in front of it. Early on the first day of the week, women came to see the tomb, and an angel told them not to be afraid, because Jesus had risen. As they ran to tell his disciples, Jesus met them, and they worshiped him.",
+   "verse": {
+    "ref": "Matthew 28:6",
+    "osis": "Matt.28.6",
+    "WEB": {
+     "text": "He is not here, for he has risen, just like he said.",
+     "partOfVerse": true,
+     "fullVerse": "He is not here, for he has risen, just like he said. Come, see the place where the Lord was lying."
+    },
+    "KJV": {
+     "text": "He is not here: for he is risen, as he said.",
+     "partOfVerse": true,
+     "fullVerse": "He is not here: for he is risen, as he said. Come, see the place where the Lord lay."
+    }
+   }
+  }
+ ]
+}

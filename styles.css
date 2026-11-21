@@ -118,6 +118,9 @@ section{scroll-margin-top:64px}
 .experience-grid .astra{height:100%;grid-template-columns:1fr;justify-items:start;align-content:start}
 .experience-grid .astra__emblem{width:160px}
 .experience-grid .astra h3{font-size:26px}
+.experience-grid .astra--wide{grid-column:1/-1;grid-template-columns:200px 1fr;align-items:center}
+.experience-grid .astra--wide .astra__emblem{width:180px}
+@media (max-width:900px){.experience-grid .astra--wide{grid-template-columns:1fr}.experience-grid .astra--wide .astra__emblem{width:150px}}
 
 /* modules */
 .modules{padding-top:40px;padding-bottom:40px}
