@@ -22,6 +22,16 @@
   }
  },
  "defaultTranslation": "KJV",
+ "featured": [
+  {
+   "label": "Who is Jesus?",
+   "story": "who-is-jesus"
+  },
+  {
+   "label": "What should we do?",
+   "story": "pentecost"
+  }
+ ],
  "stories": [
   {
    "id": "creation",
@@ -44,8 +54,24 @@
      "fullVerse": "In the beginning God created the heaven and the earth."
     }
    },
+   "verses": [
+    {
+     "ref": "Genesis 1:1",
+     "osis": "Gen.1.1",
+     "WEB": {
+      "text": "In the beginning, God created the heavens and the earth.",
+      "partOfVerse": false,
+      "fullVerse": "In the beginning, God created the heavens and the earth."
+     },
+     "KJV": {
+      "text": "In the beginning God created the heaven and the earth.",
+      "partOfVerse": false,
+      "fullVerse": "In the beginning God created the heaven and the earth."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "noah",
@@ -68,8 +94,24 @@
      "fullVerse": "I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth."
     }
    },
+   "verses": [
+    {
+     "ref": "Genesis 9:13",
+     "osis": "Gen.9.13",
+     "WEB": {
+      "text": "I set my rainbow in the cloud, and it will be a sign of a covenant between me and the earth.",
+      "partOfVerse": false,
+      "fullVerse": "I set my rainbow in the cloud, and it will be a sign of a covenant between me and the earth."
+     },
+     "KJV": {
+      "text": "I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth.",
+      "partOfVerse": false,
+      "fullVerse": "I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "abraham",
@@ -92,8 +134,24 @@
      "fullVerse": "Is any thing too hard for the LORD? At the time appointed I will return unto thee, according to the time of life, and Sarah shall have a son."
     }
    },
+   "verses": [
+    {
+     "ref": "Genesis 18:14",
+     "osis": "Gen.18.14",
+     "WEB": {
+      "text": "Is anything too hard for the LORD?",
+      "partOfVerse": true,
+      "fullVerse": "Is anything too hard for the LORD? At the set time I will return to you, when the season comes around, and Sarah will have a son.”"
+     },
+     "KJV": {
+      "text": "Is any thing too hard for the LORD?",
+      "partOfVerse": true,
+      "fullVerse": "Is any thing too hard for the LORD? At the time appointed I will return unto thee, according to the time of life, and Sarah shall have a son."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "joseph",
@@ -116,8 +174,24 @@
      "fullVerse": "But as for you, ye thought evil against me; but God meant it unto good, to bring to pass, as it is this day, to save much people alive."
     }
    },
+   "verses": [
+    {
+     "ref": "Genesis 50:20",
+     "osis": "Gen.50.20",
+     "WEB": {
+      "text": "As for you, you meant evil against me, but God meant it for good",
+      "partOfVerse": true,
+      "fullVerse": "As for you, you meant evil against me, but God meant it for good, to save many people alive, as is happening today."
+     },
+     "KJV": {
+      "text": "But as for you, ye thought evil against me; but God meant it unto good",
+      "partOfVerse": true,
+      "fullVerse": "But as for you, ye thought evil against me; but God meant it unto good, to bring to pass, as it is this day, to save much people alive."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "red-sea",
@@ -140,8 +214,24 @@
      "fullVerse": "The LORD shall fight for you, and ye shall hold your peace."
     }
    },
+   "verses": [
+    {
+     "ref": "Exodus 14:14",
+     "osis": "Exod.14.14",
+     "WEB": {
+      "text": "The LORD will fight for you, and you shall be still.",
+      "partOfVerse": false,
+      "fullVerse": "The LORD will fight for you, and you shall be still.”"
+     },
+     "KJV": {
+      "text": "The LORD shall fight for you, and ye shall hold your peace.",
+      "partOfVerse": false,
+      "fullVerse": "The LORD shall fight for you, and ye shall hold your peace."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "david",
@@ -164,8 +254,24 @@
      "fullVerse": "And all this assembly shall know that the LORD saveth not with sword and spear: for the battle is the LORD’s, and he will give you into our hands."
     }
    },
+   "verses": [
+    {
+     "ref": "1 Samuel 17:47",
+     "osis": "1Sam.17.47",
+     "WEB": {
+      "text": "the battle is the LORD’s",
+      "partOfVerse": true,
+      "fullVerse": "and that all this assembly may know that the LORD doesn’t save with sword and spear; for the battle is the LORD’s, and he will give you into our hand.”"
+     },
+     "KJV": {
+      "text": "the battle is the LORD’s",
+      "partOfVerse": true,
+      "fullVerse": "And all this assembly shall know that the LORD saveth not with sword and spear: for the battle is the LORD’s, and he will give you into our hands."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "daniel",
@@ -188,8 +294,24 @@
      "fullVerse": "My God hath sent his angel, and hath shut the lions’ mouths, that they have not hurt me: forasmuch as before him innocency was found in me; and also before thee, O king, have I done no hurt."
     }
    },
+   "verses": [
+    {
+     "ref": "Daniel 6:22",
+     "osis": "Dan.6.22",
+     "WEB": {
+      "text": "My God has sent his angel, and has shut the lions’ mouths, and they have not hurt me",
+      "partOfVerse": true,
+      "fullVerse": "My God has sent his angel, and has shut the lions’ mouths, and they have not hurt me, because innocence was found in me before him; and also before you, O king, I have done no harm.”"
+     },
+     "KJV": {
+      "text": "My God hath sent his angel, and hath shut the lions’ mouths, that they have not hurt me",
+      "partOfVerse": true,
+      "fullVerse": "My God hath sent his angel, and hath shut the lions’ mouths, that they have not hurt me: forasmuch as before him innocency was found in me; and also before thee, O king, have I done no hurt."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "jonah",
@@ -212,8 +334,26 @@
      "fullVerse": "But I will sacrifice unto thee with the voice of thanksgiving; I will pay that that I have vowed. Salvation is of the LORD."
     }
    },
+   "verses": [
+    {
+     "ref": "Jonah 2:9",
+     "osis": "Jonah.2.9",
+     "WEB": {
+      "text": "Salvation belongs to the LORD.",
+      "partOfVerse": true,
+      "fullVerse": "But I will sacrifice to you with the voice of thanksgiving. I will pay that which I have vowed. Salvation belongs to the LORD.”"
+     },
+     "KJV": {
+      "text": "Salvation is of the LORD.",
+      "partOfVerse": true,
+      "fullVerse": "But I will sacrifice unto thee with the voice of thanksgiving; I will pay that that I have vowed. Salvation is of the LORD."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": "pentecost"
+   "pointTo": [
+    "pentecost"
+   ]
   },
   {
    "id": "jesus-born",
@@ -236,9 +376,82 @@
      "fullVerse": "For unto you is born this day in the city of David a Saviour, which is Christ the Lord."
     }
    },
+   "verses": [
+    {
+     "ref": "Luke 2:11",
+     "osis": "Luke.2.11",
+     "WEB": {
+      "text": "For there is born to you today, in David’s city, a Savior, who is Christ the Lord.",
+      "partOfVerse": false,
+      "fullVerse": "For there is born to you today, in David’s city, a Savior, who is Christ the Lord."
+     },
+     "KJV": {
+      "text": "For unto you is born this day in the city of David a Saviour, which is Christ the Lord.",
+      "partOfVerse": false,
+      "fullVerse": "For unto you is born this day in the city of David a Saviour, which is Christ the Lord."
+     }
+    }
+   ],
+   "more": [],
+   "pointTo": [
+    "who-is-jesus",
+    "pentecost"
+   ]
+  },
+  {
+   "id": "who-is-jesus",
+   "order": 10,
+   "title": "Who Is Jesus?",
+   "testament": "NT",
+   "passage": "John 1:1–17; Matthew 1:23; 1 Timothy 3:16",
+   "retelling": "The Bible tells us who Jesus is. In the beginning was the Word, and the Word was God, and all things were made by him. Then the Word was made flesh and dwelt among us, full of grace and truth, and grace and truth came by Jesus Christ. Jesus is the Word made flesh: Emmanuel, God with us.",
+   "verse": {
+    "ref": "John 1:1",
+    "osis": "John.1.1",
+    "WEB": {
+     "text": "In the beginning was the Word, and the Word was with God, and the Word was God.",
+     "partOfVerse": false,
+     "fullVerse": "In the beginning was the Word, and the Word was with God, and the Word was God."
+    },
+    "KJV": {
+     "text": "In the beginning was the Word, and the Word was with God, and the Word was God.",
+     "partOfVerse": false,
+     "fullVerse": "In the beginning was the Word, and the Word was with God, and the Word was God."
+    }
+   },
+   "verses": [
+    {
+     "ref": "John 1:1",
+     "osis": "John.1.1",
+     "WEB": {
+      "text": "In the beginning was the Word, and the Word was with God, and the Word was God.",
+      "partOfVerse": false,
+      "fullVerse": "In the beginning was the Word, and the Word was with God, and the Word was God."
+     },
+     "KJV": {
+      "text": "In the beginning was the Word, and the Word was with God, and the Word was God.",
+      "partOfVerse": false,
+      "fullVerse": "In the beginning was the Word, and the Word was with God, and the Word was God."
+     }
+    },
+    {
+     "ref": "John 1:14",
+     "osis": "John.1.14",
+     "WEB": {
+      "text": "The Word became flesh and lived among us. We saw his glory, such glory as of the only born Son of the Father, full of grace and truth.",
+      "partOfVerse": false,
+      "fullVerse": "The Word became flesh and lived among us. We saw his glory, such glory as of the only born Son of the Father, full of grace and truth."
+     },
+     "KJV": {
+      "text": "And the Word was made flesh, and dwelt among us, (and we beheld his glory, the glory as of the only begotten of the Father,) full of grace and truth.",
+      "partOfVerse": false,
+      "fullVerse": "And the Word was made flesh, and dwelt among us, (and we beheld his glory, the glory as of the only begotten of the Father,) full of grace and truth."
+     }
+    }
+   ],
    "more": [
     {
-     "label": "Who is Jesus?",
+     "label": "The Bible also says",
      "ref": "1 Timothy 3:16",
      "osis": "1Tim.3.16",
      "WEB": {
@@ -251,11 +464,13 @@
      }
     }
    ],
-   "pointTo": "pentecost"
+   "pointTo": [
+    "pentecost"
+   ]
   },
   {
    "id": "storm",
-   "order": 10,
+   "order": 11,
    "title": "Jesus Calms the Storm",
    "testament": "NT",
    "passage": "Mark 4:35–41",
@@ -274,6 +489,22 @@
      "fullVerse": "And they feared exceedingly, and said one to another, What manner of man is this, that even the wind and the sea obey him?"
     }
    },
+   "verses": [
+    {
+     "ref": "Mark 4:41",
+     "osis": "Mark.4.41",
+     "WEB": {
+      "text": "Who then is this, that even the wind and the sea obey him?",
+      "partOfVerse": true,
+      "fullVerse": "They were greatly afraid and said to one another, “Who then is this, that even the wind and the sea obey him?”"
+     },
+     "KJV": {
+      "text": "What manner of man is this, that even the wind and the sea obey him?",
+      "partOfVerse": true,
+      "fullVerse": "And they feared exceedingly, and said one to another, What manner of man is this, that even the wind and the sea obey him?"
+     }
+    }
+   ],
    "more": [
     {
      "label": "Who is Jesus?",
@@ -289,11 +520,11 @@
      }
     }
    ],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "five-thousand",
-   "order": 11,
+   "order": 12,
    "title": "Jesus Feeds Five Thousand",
    "testament": "NT",
    "passage": "John 6:1–14, 35",
@@ -312,12 +543,28 @@
      "fullVerse": "And Jesus said unto them, I am the bread of life: he that cometh to me shall never hunger; and he that believeth on me shall never thirst."
     }
    },
+   "verses": [
+    {
+     "ref": "John 6:35",
+     "osis": "John.6.35",
+     "WEB": {
+      "text": "I am the bread of life.",
+      "partOfVerse": true,
+      "fullVerse": "Jesus said to them, “I am the bread of life. Whoever comes to me will not be hungry, and whoever believes in me will never be thirsty."
+     },
+     "KJV": {
+      "text": "I am the bread of life",
+      "partOfVerse": true,
+      "fullVerse": "And Jesus said unto them, I am the bread of life: he that cometh to me shall never hunger; and he that believeth on me shall never thirst."
+     }
+    }
+   ],
    "more": [],
-   "pointTo": null
+   "pointTo": []
   },
   {
    "id": "risen",
-   "order": 12,
+   "order": 13,
    "title": "Jesus Is Risen",
    "testament": "NT",
    "passage": "Matthew 27:57–28:10; Acts 2:38",
@@ -336,6 +583,22 @@
      "fullVerse": "He is not here: for he is risen, as he said. Come, see the place where the Lord lay."
     }
    },
+   "verses": [
+    {
+     "ref": "Matthew 28:6",
+     "osis": "Matt.28.6",
+     "WEB": {
+      "text": "He is not here, for he has risen, just like he said.",
+      "partOfVerse": true,
+      "fullVerse": "He is not here, for he has risen, just like he said. Come, see the place where the Lord was lying."
+     },
+     "KJV": {
+      "text": "He is not here: for he is risen, as he said.",
+      "partOfVerse": true,
+      "fullVerse": "He is not here: for he is risen, as he said. Come, see the place where the Lord lay."
+     }
+    }
+   ],
    "more": [
     {
      "label": "What should we do?",
@@ -351,11 +614,13 @@
      }
     }
    ],
-   "pointTo": "pentecost"
+   "pointTo": [
+    "pentecost"
+   ]
   },
   {
    "id": "pentecost",
-   "order": 13,
+   "order": 14,
    "title": "The Day of Pentecost",
    "testament": "NT",
    "passage": "Acts 1:4–5; 2:1–41",
@@ -374,6 +639,22 @@
      "fullVerse": "Then Peter said unto them, Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost."
     }
    },
+   "verses": [
+    {
+     "ref": "Acts 2:38",
+     "osis": "Acts.2.38",
+     "WEB": {
+      "text": "Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of sins, and you will receive the gift of the Holy Spirit.",
+      "partOfVerse": true,
+      "fullVerse": "Peter said to them, “Repent and be baptized, every one of you, in the name of Jesus Christ for the forgiveness of sins, and you will receive the gift of the Holy Spirit."
+     },
+     "KJV": {
+      "text": "Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",
+      "partOfVerse": true,
+      "fullVerse": "Then Peter said unto them, Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost."
+     }
+    }
+   ],
    "more": [
     {
      "label": "What happened that day",
@@ -389,7 +670,7 @@
      }
     }
    ],
-   "pointTo": null
+   "pointTo": []
   }
  ]
 }

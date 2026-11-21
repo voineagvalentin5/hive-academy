@@ -28,15 +28,27 @@
   function core(w) { return w.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, ""); }
   function words(t) { return t.trim().split(/\s+/); }
   function story(id) { return DATA.stories.find(function (s) { return s.id === id; }); }
+  /* A memory item is one key verse. Most stories have one; "Who Is Jesus?" has two (John 1:1 and 1:14). */
+  var ITEMS = [];
+  function buildItems() {
+    ITEMS = [];
+    DATA.stories.forEach(function (s) {
+      var vs = s.verses || [s.verse];
+      s.items = vs.map(function (v, i) { var it = { id: i ? s.id + "-" + (i + 1) : s.id, title: s.title, verse: v, story: s, n: i, of: vs.length }; ITEMS.push(it); return it; });
+    });
+  }
+  function item(id) { return ITEMS.find(function (x) { return x.id === id; }); }
+  function storyStars(s) { return s.items.reduce(function (a, it) { return a + starCount(it.id); }, 0); }
   function verse(s) { return s.verse[S.tr]; }
   function starCount(id) { var g = S.stars[id] || {}; return (g.fill ? 1 : 0) + (g.order ? 1 : 0) + (g.letters ? 1 : 0); }
-  function starsHtml(n, label) {
-    var h = '<span class="stars" role="img" aria-label="' + esc(label || (n + " of 3 stars")) + '">';
-    for (var i = 0; i < 3; i++) h += '<span class="' + (i < n ? "on" : "") + '" aria-hidden="true">★</span>';
+  function starsHtml(n, label, max) {
+    max = max || 3;
+    var h = '<span class="stars" role="img" aria-label="' + esc(label || (n + " of " + max + " stars")) + '">';
+    for (var i = 0; i < max; i++) h += '<span class="' + (i < n ? "on" : "") + '" aria-hidden="true">★</span>';
     return h + "</span>";
   }
-  function learnedCount() { return DATA.stories.filter(function (s) { return starCount(s.id) === 3; }).length; }
-  function totalStars() { return DATA.stories.reduce(function (a, s) { return a + starCount(s.id); }, 0); }
+  function learnedCount() { return ITEMS.filter(function (it) { return starCount(it.id) === 3; }).length; }
+  function totalStars() { return ITEMS.reduce(function (a, it) { return a + starCount(it.id); }, 0); }
   function streak() {
     var set = {}; S.days.forEach(function (d) { set[d] = 1; });
     var d = new Date(); if (!set[dayStr(d)]) d.setDate(d.getDate() - 1);
@@ -71,31 +83,47 @@
     var h = '<div class="intro"><div><h1>Bible stories &amp; verse games</h1>' +
       "<p>Read a story together, then play three short games to learn its key verse. Earn a star for each game.</p></div>" +
       '<a class="pill" href="#/progress"><span><span aria-hidden="true">★</span> <b>' + totalStars() + "</b> star" + (totalStars() === 1 ? "" : "s") + "</span><span>· <b>" + learnedCount() + "</b> verse" + (learnedCount() === 1 ? "" : "s") + " learned</span><span>· <b>" + streak() + "</b>-day streak</span></a></div>" +
-      '<ul class="grid" aria-label="Bible stories">';
+      featuredHtml() +
+      '<h2 class="sec">All stories</h2><ul class="grid" aria-label="Bible stories">';
     DATA.stories.forEach(function (s) {
-      var n = starCount(s.id);
+      var n = storyStars(s), mx = 3 * s.items.length;
       h += '<li><a class="tile" href="#/story/' + s.id + '"><span class="tile__n">' + (s.testament === "OT" ? "Old Testament" : "New Testament") + " · " + s.order + "</span>" +
-        "<h3>" + esc(s.title) + '</h3><span class="tile__ref">' + esc(s.passage) + "</span>" + starsHtml(n, n + " of 3 stars for " + s.title) + "</a></li>";
+        "<h3>" + esc(s.title) + '</h3><span class="tile__ref">' + esc(s.passage) + "</span>" + starsHtml(n, n + " of " + mx + " stars for " + s.title, mx) + "</a></li>";
     });
     app.innerHTML = h + "</ul>";
     focusTitle("Stories");
   }
 
+  function featuredHtml() {
+    var f = DATA.featured || []; if (!f.length) return "";
+    var h = '<section class="featured" aria-labelledby="ft"><h2 id="ft" class="sec">Featured verses</h2><div class="featured__grid">';
+    f.forEach(function (x) {
+      var t = story(x.story); if (!t) return;
+      h += '<article class="feat"><p class="kick">' + esc(x.label) + "</p>";
+      t.items.forEach(function (it) { h += '<blockquote><p>“' + esc(it.verse[S.tr].text) + '”</p><cite>' + esc(it.verse.ref) + " (" + S.tr + ")</cite></blockquote>"; });
+      h += '<a class="btn" href="#/story/' + t.id + '">Learn ' + (t.items.length > 1 ? "these verses" : "this verse") + ' <span aria-hidden="true">→</span></a></article>';
+    });
+    return h + "</div></section>";
+  }
+
   function storyView(s) {
     setTab("stories");
-    var v = verse(s), g = S.stars[s.id] || {};
     var h = '<a class="crumb" href="#/"><span aria-hidden="true">←</span> All stories</a>' +
       '<div class="story"><article class="panel" aria-labelledby="st-title"><p class="kick">Story ' + s.order + " of " + DATA.stories.length + "</p>" +
       '<h1 id="st-title">' + esc(s.title) + '</h1><p class="retell">' + esc(s.retelling) + "</p>" +
       '<p class="passage">Read it in the Bible: <strong>' + esc(s.passage) + "</strong></p>" + moreHtml(s) + "</article>" +
-      '<section class="verse" aria-labelledby="kv"><p class="kick" id="kv">Key verse</p><blockquote><p style="margin:0">“' + esc(v.text) + "”</p></blockquote>" +
-      "<cite>" + refLine(s) + "</cite>" +
-      '<ul class="games" aria-label="Verse games">';
-    Object.keys(MODES).forEach(function (m) {
-      h += '<li><a class="game-btn" href="#/play/' + s.id + "/" + m + '"><b><span aria-hidden="true">' + MODES[m].icon + "</span> " + MODES[m].name + "</b>" +
-        "<span>" + (g[m] ? '<span class="done">★ Star earned</span>' : "Play for a star") + "</span></a></li>";
+      '<div class="verses">';
+    s.items.forEach(function (it, k) {
+      var v = it.verse[S.tr], g = S.stars[it.id] || {};
+      h += '<section class="verse" aria-labelledby="kv' + k + '"><p class="kick" id="kv' + k + '">' + (it.of > 1 ? "Key verse " + (k + 1) + " of " + it.of : "Key verse") + '</p><blockquote><p style="margin:0">“' + esc(v.text) + "”</p></blockquote>" +
+        "<cite>" + refLine(it) + "</cite>" + '<ul class="games" aria-label="Verse games for ' + esc(it.verse.ref) + '">';
+      Object.keys(MODES).forEach(function (m) {
+        h += '<li><a class="game-btn" href="#/play/' + it.id + "/" + m + '"><b><span aria-hidden="true">' + MODES[m].icon + "</span> " + MODES[m].name + "</b>" +
+          "<span>" + (g[m] ? '<span class="done">★ Star earned</span>' : "Play for a star") + "</span></a></li>";
+      });
+      h += "</ul>" + '<div style="margin-top:14px">' + starsHtml(starCount(it.id), starCount(it.id) + " of 3 stars for this verse") + "</div></section>";
     });
-    h += "</ul>" + '<div style="margin-top:14px">' + starsHtml(starCount(s.id), starCount(s.id) + " of 3 stars for this verse") + "</div></section></div>";
+    h += "</div></div>";
     var i = DATA.stories.indexOf(s), nx = DATA.stories[(i + 1) % DATA.stories.length];
     h += '<div class="btns"><a class="btn btn--ghost" style="color:var(--text);border-color:rgba(236,232,225,.4)" href="#/story/' + nx.id + '">Next story: ' + esc(nx.title) + ' <span aria-hidden="true">→</span></a></div>';
     app.innerHTML = h;
@@ -109,10 +137,13 @@
       h += '<aside class="more" aria-label="' + esc(m.label) + '"><p class="kick">' + esc(m.label) + "</p><blockquote><p>“" + esc(q.text) + "”</p></blockquote>" +
         "<cite>" + esc(m.ref) + " (" + S.tr + ")" + (q.partOfVerse ? ' <span class="part">Part of the verse</span>' : "") + "</cite></aside>";
     });
-    if (s.pointTo && s.pointTo !== s.id) {
-      var t = story(s.pointTo);
-      if (t) h += '<p class="point"><a href="#/story/' + t.id + '">' + ((s.more || []).some(function (m) { return m.ref === t.verse.ref; }) ? "Read the story of " + esc(t.title) : "What does the Bible say we should do? Read " + esc(t.title) + " (" + esc(t.verse.ref) + ")") + ' <span aria-hidden="true">→</span></a></p>';
-    }
+    (s.pointTo || []).forEach(function (pid) {
+      var t = story(pid); if (!t || t.id === s.id) return;
+      var quoted = (s.more || []).some(function (m) { return m.ref === t.verse.ref; });
+      var lead = pid === "who-is-jesus" ? "Who is Jesus? Read " + esc(t.title) + " (John 1:1, 14)" :
+        quoted ? "Read the story of " + esc(t.title) : "What does the Bible say we should do? Read " + esc(t.title) + " (" + esc(t.verse.ref) + ")";
+      h += '<p class="point"><a href="#/story/' + t.id + '">' + lead + ' <span aria-hidden="true">→</span></a></p>';
+    });
     return h;
   }
   function winHtml(s, mode, fresh) {
@@ -123,12 +154,12 @@
       (n === 3 ? "<p>You learned this verse. Say it to someone today!</p>" : "") +
       '<div class="btns"><a class="btn" href="#/play/' + s.id + "/" + mode + '?again=' + Date.now() + '">Play again</a>' +
       (next ? '<a class="btn" href="#/play/' + s.id + "/" + next + '">Next game: ' + MODES[next].name + "</a>" : "") +
-      '<a class="btn btn--ghost" href="#/story/' + s.id + '">Back to the story</a></div></div>';
+      '<a class="btn btn--ghost" href="#/story/' + s.story.id + '">Back to the story</a></div></div>';
   }
 
   function playShell(s, mode) {
     setTab("stories");
-    app.innerHTML = '<div class="play"><a class="crumb" href="#/story/' + s.id + '"><span aria-hidden="true">←</span> ' + esc(s.title) + "</a>" +
+    app.innerHTML = '<div class="play"><a class="crumb" href="#/story/' + s.story.id + '"><span aria-hidden="true">←</span> ' + esc(s.title) + "</a>" +
       '<div class="play__head"><h1 style="font-size:clamp(26px,3.4vw,36px);margin:0"><span aria-hidden="true">' + MODES[mode].icon + "</span> " + MODES[mode].name + "</h1>" +
       starsHtml(starCount(s.id), starCount(s.id) + " of 3 stars for this verse") + "</div>" +
       '<section class="board" aria-label="' + esc(MODES[mode].name + " game") + '"><p class="how">' + esc(MODES[mode].how) + '</p><div id="game"></div>' +
@@ -146,7 +177,7 @@
 
   function pool(exclude) {
     var out = {};
-    DATA.stories.forEach(function (s) { words(verse(s).text).forEach(function (w) { var c = core(w); if (c.length > 2 && STOP.indexOf(c.toLowerCase()) < 0) out[c.toLowerCase()] = c; }); });
+    ITEMS.forEach(function (s) { words(verse(s).text).forEach(function (w) { var c = core(w); if (c.length > 2 && STOP.indexOf(c.toLowerCase()) < 0) out[c.toLowerCase()] = c; }); });
     exclude.forEach(function (x) { delete out[x.toLowerCase()]; });
     return Object.keys(out).map(function (k) { return out[k]; });
   }
@@ -225,13 +256,13 @@
   function progress() {
     setTab("progress");
     var h = "<h1>My stars</h1>" + '<div class="prog">' +
-      '<div class="stat"><b>' + totalStars() + '</b><span>stars of ' + DATA.stories.length * 3 + "</span></div>" +
+      '<div class="stat"><b>' + totalStars() + '</b><span>stars of ' + ITEMS.length * 3 + "</span></div>" +
       '<div class="stat"><b>' + learnedCount() + '</b><span>' + (learnedCount() === 1 ? "verse" : "verses") + ' learned (3 stars)</span></div>' +
       '<div class="stat"><b>' + streak() + '</b><span>day streak' + (streak() ? "" : ": play today to start one") + "</span></div></div>" +
       '<table class="table"><caption class="sr-only">Stars for each verse</caption><thead><tr><th scope="col">Story</th><th scope="col" class="hide-s">Verse</th><th scope="col">Stars</th></tr></thead><tbody>';
-    DATA.stories.forEach(function (s) {
-      var n = starCount(s.id);
-      h += '<tr><td><a href="#/story/' + s.id + '">' + esc(s.title) + '</a></td><td class="muted hide-s">' + esc(s.verse.ref) + "</td><td>" + starsHtml(n, n + " of 3 stars") + "</td></tr>";
+    ITEMS.forEach(function (it) {
+      var n = starCount(it.id);
+      h += '<tr><td><a href="#/story/' + it.story.id + '">' + esc(it.title) + (it.of > 1 ? " (" + (it.n + 1) + ")" : "") + '</a></td><td class="muted hide-s">' + esc(it.verse.ref) + "</td><td>" + starsHtml(n, n + " of 3 stars") + "</td></tr>";
     });
     h += "</tbody></table>" +
       '<p class="note">Progress is saved only in this browser on this device (local storage). There are no accounts, and nothing about your play is sent to us. Clearing your browser data, or the button below, erases it.</p>' +
@@ -250,7 +281,8 @@
     var p = (location.hash.replace(/^#\/?/, "").split("?")[0] || "").split("/");
     var s = p[1] && story(p[1]);
     if (p[0] === "story" && s) return storyView(s);
-    if (p[0] === "play" && s && MODES[p[2]]) return ({ fill: gameFill, order: gameOrder, letters: gameLetters })[p[2]](s);
+    var it = p[0] === "play" && p[1] && item(p[1]);
+    if (it && MODES[p[2]]) return ({ fill: gameFill, order: gameOrder, letters: gameLetters })[p[2]](it);
     if (p[0] === "progress") return progress();
     home();
   }
@@ -264,6 +296,6 @@
   window.addEventListener("hashchange", route);
 
   fetch("data/stories.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
-    DATA = d; setTr(S.tr || d.defaultTranslation || "KJV"); route();
+    DATA = d; buildItems(); setTr(S.tr || d.defaultTranslation || "KJV"); route();
   }).catch(function () { app.innerHTML = '<p class="note">The stories could not be loaded. Please refresh the page.</p>'; });
 })();

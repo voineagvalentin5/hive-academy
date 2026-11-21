@@ -83,15 +83,25 @@ STORIES = [
          retelling="God told Jonah to go to the great city of Nineveh, but Jonah ran away from the LORD on a ship. The LORD sent a great wind, Jonah was cast into the sea, "
                    "and the LORD prepared a great fish to swallow him. Jonah was in the belly of the fish three days and three nights, and he prayed to the LORD from inside the fish. "
                    "The LORD spoke to the fish, and it put Jonah out on dry land. Then Jonah went to Nineveh, the people believed God and turned from their evil way, and God did not destroy the city.",
-         book="Jonah", ch=2, v=9, web="Salvation belongs to the LORD.", kjv="Salvation is of the LORD.", point="pentecost"),
+         book="Jonah", ch=2, v=9, web="Salvation belongs to the LORD.", kjv="Salvation is of the LORD.", point=["pentecost"]),
     dict(id="jesus-born", title="Jesus Is Born", testament="NT", passage="Luke 2:1–20; Matthew 1:21–23",
          retelling="Mary and Joseph went to Bethlehem, and there Mary gave birth to her firstborn son. She wrapped him in swaddling clothes and laid him in a manger, because there was no room for them in the inn. "
                    "An angel of the Lord told shepherds the good news, and they came quickly and found the baby, just as they had been told. "
                    "His name is Jesus, because he shall save his people from their sins, and the Bible says he is Emmanuel, which means God with us.",
          book="Luke", ch=2, v=11, web="For there is born to you today, in David’s city, a Savior, who is Christ the Lord.",
          kjv="For unto you is born this day in the city of David a Saviour, which is Christ the Lord.",
-         more=[dict(label="Who is Jesus?", book="1 Timothy", ch=3, v=16, kjv="God was manifest in the flesh", web="God was revealed in the flesh")],
-         point="pentecost"),
+         point=["who-is-jesus", "pentecost"]),
+    dict(id="who-is-jesus", title="Who Is Jesus?", testament="NT", passage="John 1:1–17; Matthew 1:23; 1 Timothy 3:16",
+         retelling="The Bible tells us who Jesus is. In the beginning was the Word, and the Word was God, and all things were made by him. "
+                   "Then the Word was made flesh and dwelt among us, full of grace and truth, and grace and truth came by Jesus Christ. "
+                   "Jesus is the Word made flesh: Emmanuel, God with us.",
+         book="John", ch=1, v=1, web="In the beginning was the Word, and the Word was with God, and the Word was God.",
+         kjv="In the beginning was the Word, and the Word was with God, and the Word was God.",
+         also=[dict(book="John", ch=1, v=14,
+                    kjv="And the Word was made flesh, and dwelt among us, (and we beheld his glory, the glory as of the only begotten of the Father,) full of grace and truth.",
+                    web="The Word became flesh and lived among us. We saw his glory, such glory as of the only born Son of the Father, full of grace and truth.")],
+         more=[dict(label="The Bible also says", book="1 Timothy", ch=3, v=16, kjv="God was manifest in the flesh", web="God was revealed in the flesh")],
+         point=["pentecost"]),
     dict(id="storm", title="Jesus Calms the Storm", testament="NT", passage="Mark 4:35–41",
          retelling="Jesus and his disciples got into a ship to cross over the sea, and Jesus was asleep on a pillow in the back of the ship. "
                    "A great storm of wind came, the waves beat into the ship until it was full, and the disciples woke him. "
@@ -111,7 +121,7 @@ STORIES = [
                    "As they ran to tell his disciples, Jesus met them, and they worshipped him. "
                    "Later, on the day of Pentecost, Peter told the people what they should do: repent (turn away from sin), be baptized in the name of Jesus Christ, and receive the gift of the Holy Ghost.",
          book="Matthew", ch=28, v=6, web="He is not here, for he has risen, just like he said.",
-         kjv="He is not here: for he is risen, as he said.", more=[ACTS_238], point="pentecost"),
+         kjv="He is not here: for he is risen, as he said.", more=[ACTS_238], point=["pentecost"]),
     dict(id="pentecost", title="The Day of Pentecost", testament="NT", passage="Acts 1:4–5; 2:1–41",
          retelling="Jesus told his disciples to wait, because they would be baptized with the Holy Ghost. When the day of Pentecost came, they were all together in one place. "
                    "Suddenly a sound from heaven like a rushing mighty wind filled the house, and tongues like fire sat on each of them. "
@@ -158,22 +168,22 @@ def quote(m, sid):
             "KJV": {"text": m["kjv"], "partOfVerse": check(m["kjv"], ksrc, sid + " more KJV")}}
 
 stories = []
+def key_verse(k, sid):
+    code, kfile, osis = BOOKS[k["book"]]
+    wsrc = web[(code, k["ch"], k["v"])]
+    ksrc = kjv_verse(kfile, k["ch"], k["v"])
+    return {"ref": f'{k["book"]} {k["ch"]}:{k["v"]}', "osis": f'{osis}.{k["ch"]}.{k["v"]}',
+            "WEB": {"text": k["web"], "partOfVerse": check(k["web"], wsrc, sid + " WEB"), "fullVerse": wsrc},
+            "KJV": {"text": k["kjv"], "partOfVerse": check(k["kjv"], ksrc, sid + " KJV"), "fullVerse": ksrc}}
+
 for n, s in enumerate(STORIES, 1):
-    code, kfile, osis = BOOKS[s["book"]]
-    wsrc = web[(code, s["ch"], s["v"])]
-    ksrc = kjv_verse(kfile, s["ch"], s["v"])
-    wpart = check(s["web"], wsrc, s["id"] + " WEB")
-    kpart = check(s["kjv"], ksrc, s["id"] + " KJV")
+    verses = [key_verse(s, s["id"])] + [key_verse(dict(a, book=a.get("book", s["book"])), s["id"]) for a in s.get("also", [])]
     stories.append({
         "id": s["id"], "order": n, "title": s["title"], "testament": s["testament"],
         "passage": s["passage"], "retelling": s["retelling"],
-        "verse": {
-            "ref": f'{s["book"]} {s["ch"]}:{s["v"]}', "osis": f'{osis}.{s["ch"]}.{s["v"]}',
-            "WEB": {"text": s["web"], "partOfVerse": wpart, "fullVerse": wsrc},
-            "KJV": {"text": s["kjv"], "partOfVerse": kpart, "fullVerse": ksrc},
-        },
+        "verse": verses[0], "verses": verses,
         "more": [quote(m, s["id"]) for m in s.get("more", [])],
-        "pointTo": s.get("point"),
+        "pointTo": s.get("point") or [],
     })
 
 data = {
@@ -186,6 +196,10 @@ data = {
                 "source": "eBible.org, engwebp (2020 stable text)", "url": "https://ebible.org/web/"},
     },
     "defaultTranslation": "KJV",
+    "featured": [
+        {"label": "Who is Jesus?", "story": "who-is-jesus"},
+        {"label": "What should we do?", "story": "pentecost"},
+    ],
     "stories": stories,
 }
 OUT.parent.mkdir(parents=True, exist_ok=True)

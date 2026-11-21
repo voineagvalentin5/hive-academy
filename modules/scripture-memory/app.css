@@ -173,3 +173,17 @@ main#app{padding-top:28px;padding-bottom:64px;min-height:60vh;outline:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (forced-colors:active){.btn,.word,.lt,.game-btn,.tabs a{border:2px solid ButtonText}}
+
+/* featured verses (module home) and multi-verse cards */
+.sec{font-size:clamp(20px,2.4vw,26px);margin:8px 0 14px}
+.featured{margin:0 0 30px}
+.featured__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.feat{display:flex;flex-direction:column;gap:12px;background:var(--paper);color:var(--ink);border:3px solid var(--gold);border-radius:18px;padding:22px;box-shadow:0 10px 34px rgba(0,0,0,.3)}
+.feat .kick{color:#7a5a1e;margin:0}
+.feat blockquote{margin:0}
+.feat blockquote p{margin:0 0 4px;font:650 clamp(18px,2vw,21px)/1.45 var(--head);color:var(--ink)}
+.feat cite{font-style:normal;font-weight:700;color:var(--ink2);font-size:15px}
+.feat .btn{margin-top:auto;align-self:flex-start}
+.verses{display:grid;gap:18px}
+@media (max-width:860px){.featured__grid{grid-template-columns:1fr}}
+@media (max-width:560px){.feat{padding:18px}.feat .btn{align-self:stretch}}
