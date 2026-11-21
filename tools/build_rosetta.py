@@ -97,5 +97,13 @@ for a, b in [('"#121214"', '"#111216"'), ('"#1b1c20"', '"#1b1c22"'), ('"#3b3c42"
     script = script.replace(a, b)
 
 OUT.parent.mkdir(parents=True, exist_ok=True)
+# Keep the same Google Analytics tag as the other Academy pages.
+if "G-DW4D6JPPB4" not in head:
+    head = head.replace("</head>", (
+        '<script async src="https://www.googletagmanager.com/gtag/js?id=G-DW4D6JPPB4"></script>\n'
+        "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
+        "gtag('js',new Date());gtag('config','G-DW4D6JPPB4');</script>\n</head>"
+    ), 1)
+
 OUT.write_text(head + script, encoding="utf-8")
 print("wrote", OUT, len(head + script))
