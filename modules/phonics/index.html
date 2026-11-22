@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Hive Phonics · Hive Academy</title>
+<meta name="description" content="Hive Phonics, a Hive Academy preview: letter sounds, blending and a first-sound game for little readers ages 3 to 6, with big buttons for small hands.">
+<meta name="theme-color" content="#111216">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/montserrat-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DW4D6JPPB4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DW4D6JPPB4');</script>
+</head>
+<body>
+<a class="skip" href="#app">Skip to the games</a>
+<!-- Breadcrumb header (same pattern as Hive Kids Bible). The first crumb (official logo) links back to codex-hive.com. -->
+<nav class="bc" aria-label="Breadcrumb">
+  <div class="bc__in">
+    <ol class="bc__list" id="bc">
+      <li class="bc__item bc__item--home"><a href="https://codex-hive.com" aria-label="Codex Hive Labs, codex-hive.com"><picture><source type="image/webp" srcset="/chl-assets/codex-hive-mark-1x.webp 1x, /chl-assets/codex-hive-mark-2x.webp 2x, /chl-assets/codex-hive-mark-3x.webp 3x"><img src="/chl-assets/codex-hive-mark-1x.png" srcset="/chl-assets/codex-hive-mark-1x.png 1x, /chl-assets/codex-hive-mark-2x.png 2x, /chl-assets/codex-hive-mark-3x.png 3x" width="26" height="32" alt="" decoding="async"></picture><span class="bc__t">Codex Hive <span class="bc__labs">Labs</span></span></a></li>
+      <li class="bc__item bc__item--academy"><a href="/" aria-label="Hive Academy"><span class="bc__t">Hive Academy</span><span class="bc__dots" aria-hidden="true">…</span></a></li>
+      <li class="bc__item bc__item--module"><a href="#/" aria-current="page">Hive Phonics</a></li>
+    </ol>
+    <span class="badge bc__badge">Preview</span>
+  </div>
+</nav>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a class="top__home" href="#/" aria-label="Hive Phonics: home"><span class="top__name">Hive Phonics</span></a>
+    <nav class="tabs" aria-label="Hive Phonics">
+      <a href="#/letters" data-tab="letters" aria-label="Letters"><span class="em" aria-hidden="true">🔤</span><span class="lbl">Letters</span></a>
+      <a href="#/blend" data-tab="blend" aria-label="Blend"><span class="em" aria-hidden="true">🐝</span><span class="lbl">Blend</span></a>
+      <a href="#/game" data-tab="game" aria-label="First sound game"><span class="em" aria-hidden="true">🎯</span><span class="lbl">First sound</span></a>
+      <a href="#/stars" data-tab="stars" aria-label="My stars"><span class="em" aria-hidden="true">⭐</span><span class="lbl">My stars</span></a>
+    </nav>
+    <button type="button" class="snd" id="snd" aria-pressed="true" aria-label="Sound on"><span aria-hidden="true">🔊</span></button>
+  </div>
+</header>
+
+<main id="app" class="wrap" tabindex="-1">
+  <noscript><p class="note">Hive Phonics needs JavaScript to run the letter cards and games.</p></noscript>
+  <p class="loading">Loading…</p>
+</main>
+<div id="say" class="sr-only" aria-live="polite"></div>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p><strong>For grown-ups:</strong> sit with your child, tap together, and say the sounds out loud with them. The voice is your device's built-in reader, so it sounds a little different on each phone or tablet. Once this page has loaded, it keeps working without the internet.</p>
+    <p>Stars and streaks are saved only in this browser on this device (local storage). There are no accounts and no ads, and your child's progress is never sent to us. Like the rest of Hive Academy, this page uses Google Analytics to count visits.</p>
+    <p><img src="/assets/brand/academy-wordmark-dark-360.webp" width="180" height="26" alt="Hive Academy"> © 2026 Codex Hive Labs LLC · <a href="https://codex-hive.com">codex-hive.com</a></p>
+  </div>
+</footer>
+<script src="app.js" defer></script>
+</body>
+</html>
