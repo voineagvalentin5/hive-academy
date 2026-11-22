@@ -27,10 +27,9 @@
   var WORDLIST = [];
   Object.keys(WORDS).forEach(function (v) { WORDS[v].forEach(function (w) { WORDLIST.push({ w: w[0], em: w[1], v: v }); }); });
 
-  /* Rough spoken stand-ins for single sounds. Device voices say these imperfectly, which is why
-     letter cards lead with the letter name and a picture word, and why recorded clips win when present. */
-  var SOUND = { a: "aa", b: "buh", c: "kuh", d: "duh", e: "eh", f: "fff", g: "guh", h: "huh", i: "ih", j: "juh", k: "kuh", l: "lll", m: "mmm",
-    n: "nnn", o: "ah", p: "puh", q: "kwuh", r: "rrr", s: "sss", t: "tuh", u: "uh", v: "vvv", w: "wuh", x: "ks", y: "yuh", z: "zzz" };
+  /* Single letter sounds (phonemes) are never faked with the device voice: it says them badly.
+     A letter's sound plays only once a recorded "sound-x" clip is listed in CLIPS below. Until then the
+     "Just the sound" button is hidden, and Blend lights the letters silently so you and your child say the sounds. */
 
   /* Recorded-audio hook. Drop files into audio/ and list them here, for example:
        "sound-a": "audio/sound-a.mp3"   (the short /a/ sound)
@@ -38,6 +37,8 @@
        "word-cat": "audio/word-cat.mp3"
      Any key not listed falls back to the device voice. */
   var CLIPS = {};
+  function hasSound(l) { return !!CLIPS["sound-" + l]; }
+  function soundPart(l, extra) { var p = { key: "sound-" + l, clipOnly: true }; for (var k in extra) p[k] = extra[k]; return p; }
 
   /* ---------- state ---------- */
   var app = document.getElementById("app"), say = document.getElementById("say"), sndBtn = document.getElementById("snd");
@@ -101,9 +102,12 @@
       var p = typeof parts[i] === "string" ? { text: parts[i] } : parts[i]; i++;
       if (p.key && CLIPS[p.key]) {
         clipEl = new Audio(CLIPS[p.key]);
-        clipEl.onended = next; clipEl.onerror = function () { speakOne(p, next); };
-        clipEl.play().catch(function () { speakOne(p, next); });
-      } else speakOne(p, next);
+        /* A sound clip that fails is skipped, never replaced by the device voice. */
+        var fail = function () { if (p.clipOnly) setTimeout(next, 10); else speakOne(p, next); };
+        clipEl.onended = next; clipEl.onerror = fail;
+        clipEl.play().catch(fail);
+      } else if (p.clipOnly) setTimeout(next, 10);
+      else speakOne(p, next);
     })();
   }
   function speakOne(p, next) {
@@ -213,14 +217,14 @@
       '<p class="card__say">' + (L.end ? "<b>" + up(l) + "</b> is at the end of <b>" + L.word + "</b>. It says “ks”." : "<b>" + up(l) + "</b> is for <b>" + L.word + "</b>.") + "</p>" +
       (fresh ? '<p class="feedback ok" role="status">★ New star!</p>' : '<p class="feedback ok">★ Star earned</p>') +
       '<div class="btns"><button type="button" class="btn" id="again"><span class="em" aria-hidden="true">🔊</span> Hear it again</button>' +
-      '<button type="button" class="btn btn--ghost" id="snd1"><span class="em" aria-hidden="true">👄</span> Just the sound</button></div>' +
+      (hasSound(l) ? '<button type="button" class="btn btn--ghost" id="snd1"><span class="em" aria-hidden="true">👄</span> Just the sound</button>' : "") + "</div>" +
       '<div class="nav2"><a class="btn btn--ghost" href="#/letter/' + prev.l + '" data-letter="' + prev.l + '" aria-label="Previous letter, ' + up(prev.l) + '">← ' + up(prev.l) + '</a>' +
       '<a class="btn btn--ghost" href="#/letters">All letters</a>' +
       '<a class="btn btn--ghost" href="#/letter/' + next.l + '" data-letter="' + next.l + '" aria-label="Next letter, ' + up(next.l) + '">' + up(next.l) + " →</a></div></div>";
     var line = function () { play(letterLine(L)); bounce(document.getElementById("hear")); };
     document.getElementById("hear").addEventListener("click", line);
     document.getElementById("again").addEventListener("click", line);
-    document.getElementById("snd1").addEventListener("click", function () { play([{ key: "sound-" + l, text: SOUND[l], rate: 0.7 }]); });
+    if (hasSound(l)) document.getElementById("snd1").addEventListener("click", function () { play([soundPart(l)]); });
     announce(up(l) + " is for " + L.word);
     focusTitle();
   }
@@ -246,15 +250,16 @@
   function blendWord(w) {
     var W = wordObj(w); if (!W) { location.hash = "#/blend"; return; }
     setTab("blend"); crumbs([{ t: "Blend it", href: "#/blend" }, { t: w }]);
-    var ls = w.split(""), idx = WORDLIST.indexOf(W), next = WORDLIST[(idx + 1) % WORDLIST.length];
+    var ls = w.split(""), voiced = ls.every(hasSound), idx = WORDLIST.indexOf(W), next = WORDLIST[(idx + 1) % WORDLIST.length];
     var opts = shuffle([W].concat(shuffle(WORDLIST.filter(function (x) { return x.w !== w && x.em !== W.em; })).slice(0, 2)));
     app.innerHTML = '<div class="play"><div class="board">' +
       '<h1 class="board__t">Read the word</h1>' +
-      '<p class="how">1. Tap each letter. 2. Slide the bee. 3. Find the picture.</p>' +
+      '<p class="how">' + (voiced ? "1. Tap each letter to hear its sound. 2. Slide the bee to push the sounds together. 3. Find the picture." :
+        "1. Tap each letter and say its sound together. 2. Slide the bee and say the sounds faster and faster. 3. Find the picture.") + "</p>" +
       '<div class="track" id="track">' + ls.map(function (c, i) {
-        return '<button type="button" class="tile' + (c === W.v ? " tile--v" : "") + '" data-i="' + i + '" aria-label="Letter ' + up(c) + ', hear its sound">' + c + "</button>";
+        return '<button type="button" class="tile' + (c === W.v ? " tile--v" : "") + '" data-i="' + i + '" aria-label="Letter ' + up(c) + (hasSound(c) ? ", hear its sound" : "") + '">' + c + "</button>";
       }).join("") + "</div>" +
-      '<div class="slide"><button type="button" class="slide__bee" id="bee" aria-label="Slide the sounds together"><span class="slide__rail" aria-hidden="true"></span><span class="slide__b" aria-hidden="true">🐝</span><span class="slide__lbl">Slide the sounds</span></button></div>' +
+      '<div class="slide"><button type="button" class="slide__bee" id="bee" aria-label="Slide the sounds together"><span class="slide__rail" aria-hidden="true"></span><span class="slide__b" aria-hidden="true">🐝</span><span class="slide__lbl">Slide the bee</span></button></div>' +
       '<h2 class="q">Which picture is it?</h2>' +
       '<div class="pics" role="group" aria-label="Pick the picture">' + opts.map(function (o) {
         return '<button type="button" class="pic" data-w="' + o.w + '" aria-label="' + o.w + '"><span aria-hidden="true">' + o.em + "</span></button>";
@@ -264,21 +269,21 @@
       '<a class="btn" href="#/blend/' + next.w + '" id="next">Next word →</a></div></div></div>';
     var tiles = [].slice.call(app.querySelectorAll(".tile"));
     tiles.forEach(function (t) {
-      t.addEventListener("click", function () { var c = ls[+t.dataset.i]; light(t); play([{ key: "sound-" + c, text: SOUND[c], rate: 0.7 }]); });
+      t.addEventListener("click", function () { var c = ls[+t.dataset.i]; light(t); if (hasSound(c)) play([soundPart(c)]); else stopAudio(); });
     });
     function light(t) { t.classList.add("on"); bounce(t); }
     var bee = document.getElementById("bee"), busy = false;
     bee.addEventListener("click", function () {
       if (busy) return; busy = true;
       bee.classList.remove("go"); void bee.offsetWidth; if (!REDUCED) bee.classList.add("go");
-      var parts = ls.map(function (c) { return { key: "sound-" + c, text: SOUND[c], rate: 0.55, pause: 60 }; });
-      var k = 0;
+      /* Sounds play only when every letter in the word has a recorded clip; otherwise the bee lights the letters silently. */
+      var parts = voiced ? ls.map(function (c) { return soundPart(c, { pause: 60 }); }) : [];
       tiles.forEach(function (t) { t.classList.remove("on"); });
       /* Light letters in time with the bee (or all at once when motion is reduced). */
       if (REDUCED) tiles.forEach(light);
       else tiles.forEach(function (t, i) { setTimeout(function () { light(t); }, 250 + i * 650); });
-      play(parts, function () { busy = false; });
-      if (!S.sound) setTimeout(function () { busy = false; }, 2200);
+      if (parts.length) play(parts, function () { busy = false; }); else stopAudio();
+      if (!S.sound || !parts.length) setTimeout(function () { busy = false; }, REDUCED ? 300 : 2200);
       announce(ls.join(" "));
     });
     document.getElementById("hint").addEventListener("click", function () { play([{ key: "word-" + w, text: w, rate: 0.8 }]); });
@@ -295,7 +300,7 @@
           document.getElementById("next").focus();
         } else {
           b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong");
-          fb.className = "feedback no"; fb.textContent = "That's " + b.dataset.w + ". Slide the bee and listen again.";
+          fb.className = "feedback no"; fb.textContent = "That's " + b.dataset.w + ". Slide the bee and " + (voiced ? "listen" : "say the sounds") + " again.";
           play([{ text: "That's " + b.dataset.w + ". Try again.", rate: 0.85 }]);
         }
       });
