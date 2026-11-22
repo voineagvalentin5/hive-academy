@@ -137,7 +137,7 @@
     document.querySelectorAll(".tabs a").forEach(function (a) { if (a.dataset.tab === t) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
   }
   function focusTitle() {
-    /* The tab title stays the same on purpose, so analytics never shows which letters or words a child played. */
+    /* The tab title stays the same on purpose, so the browser history never shows which letters or words a child played. */
     var h = app.querySelector("h1,h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
     window.scrollTo(0, 0);
   }

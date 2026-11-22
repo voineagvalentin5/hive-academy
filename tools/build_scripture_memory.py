@@ -209,4 +209,6 @@ print("wrote", OUT, len(stories), "stories")
 # links back to codex-hive.com) instead of the shared nav, so nothing is copied in here any more.
 if PAGE.exists():
     page = PAGE.read_text(encoding="utf-8")
-    assert "noindex" in page and "G-DW4D6JPPB4" in page and 'aria-label="Breadcrumb"' in page and "https://codex-hive.com" in page
+    # Kids pages must stay free of analytics (COPPA): do not re-insert the Academy GA tag.
+    assert "noindex" in page and "G-DW4D6JPPB4" not in page and "googletagmanager" not in page and "Google Analytics" not in page
+    assert 'aria-label="Breadcrumb"' in page and "https://codex-hive.com" in page
