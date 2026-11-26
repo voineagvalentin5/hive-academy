@@ -17,3 +17,11 @@ As soon as `"sound-c": "audio/sound-c.mp3"` is added to `CLIPS`, the C button an
 3. List each file in the `CLIPS` map near the top of `../app.js`, e.g. `"sound-a": "audio/sound-a.mp3"`.
 
 Any clip that is missing or fails to load falls back to the device voice.
+
+4. Optional spoken lines (praise, prompts, the done-screen, and feedback) can also be recorded. Suggested names:
+   - `done-perfect.mp3` — "Perfect round! Hooray!"
+   - `done-blend.mp3` — "Great blending!"
+   - `done-listening.mp3` — "Great listening!"
+   List each one in `CLIPS` the same way, e.g. `"done-perfect": "audio/done-perfect.mp3"`.
+
+The full list of every line the page can speak, with clip keys and notes for recording, is in `voice-script.csv` and `voice-script.md` at the repo root.

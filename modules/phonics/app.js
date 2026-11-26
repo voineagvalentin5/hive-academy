@@ -231,10 +231,23 @@
   function bounce(el) { if (!el || REDUCED) return; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); }
 
   /* ---------- blending ---------- */
+  var B = null;
+  var BLEND_ROUND = 10;
+  function startBlendRound() {
+    B = { qs: shuffle(WORDLIST).slice(0, Math.min(BLEND_ROUND, WORDLIST.length)), i: 0, right: 0, over: false };
+    blendWord(B.qs[0].w, true);
+  }
+  function blendDots() {
+    return '<div class="dots" role="img" aria-label="Word ' + (B.i + 1) + " of " + B.qs.length + '">' +
+      B.qs.map(function (_, i) { return '<span class="' + (i < B.i ? "done" : i === B.i ? "now" : "") + '"></span>'; }).join("") + "</div>" +
+      '<p class="round-prog">Word <b>' + (B.i + 1) + "</b> of " + B.qs.length + "</p>";
+  }
   function blendList() {
     setTab("blend"); crumbs([{ t: "Blend it" }]);
-    var h = '<div class="intro"><div><h1>Blend it</h1><p>Pick a word. Tap each letter to hear its sound, then slide the bee to push the sounds together.</p></div>' +
-      '<span class="pill"><span><b>' + count(S.blended) + "</b> of " + WORDLIST.length + " words</span></span></div>" + noVoiceNote();
+    var h = '<div class="intro"><div><h1>Blend it</h1><p>Play a round of 10 words, or pick one to practice. Tap each letter to hear its sound, then slide the bee to push the sounds together.</p></div>' +
+      '<span class="pill"><span><b>' + count(S.blended) + "</b> of " + WORDLIST.length + " words</span></span></div>" + noVoiceNote() +
+      '<div class="board center board--start"><p class="how">Ten words a round. Slide the sounds, then find the picture.</p>' +
+      '<div class="btns"><button type="button" class="btn" id="start"><span class="em" aria-hidden="true">▶️</span> Start a round</button></div></div>';
     Object.keys(WORDS).forEach(function (v) {
       h += '<section class="vg" aria-labelledby="vg-' + v + '"><h2 class="sec" id="vg-' + v + '">' + VOWEL_NAME[v] + ' <span class="vg__ex">' + WORDS[v][0][0].replace(v, "<mark>" + v + "</mark>") + "</span></h2><ul class=\"words\">";
       WORDS[v].forEach(function (w) {
@@ -245,14 +258,18 @@
       });
       h += "</ul></section>";
     });
-    app.innerHTML = h; focusTitle();
+    app.innerHTML = h;
+    document.getElementById("start").addEventListener("click", startBlendRound);
+    focusTitle();
   }
-  function blendWord(w) {
+  function blendWord(w, inRound) {
     var W = wordObj(w); if (!W) { location.hash = "#/blend"; return; }
-    setTab("blend"); crumbs([{ t: "Blend it", href: "#/blend" }, { t: w }]);
-    var ls = w.split(""), voiced = ls.every(hasSound), idx = WORDLIST.indexOf(W), next = WORDLIST[(idx + 1) % WORDLIST.length];
+    inRound = !!(inRound && B && !B.over);
+    setTab("blend"); crumbs(inRound ? [{ t: "Blend it" }] : [{ t: "Blend it", href: "#/blend" }, { t: w }]);
+    var ls = w.split(""), voiced = ls.every(hasSound);
     var opts = shuffle([W].concat(shuffle(WORDLIST.filter(function (x) { return x.w !== w && x.em !== W.em; })).slice(0, 2)));
     app.innerHTML = '<div class="play"><div class="board">' +
+      (inRound ? blendDots() : "") +
       '<h1 class="board__t">Read the word</h1>' +
       '<p class="how">' + (voiced ? "1. Tap each letter to hear its sound. 2. Slide the bee to push the sounds together. 3. Find the picture." :
         "1. Tap each letter and say its sound together. 2. Slide the bee and say the sounds faster and faster. 3. Find the picture.") + "</p>" +
@@ -266,7 +283,7 @@
       }).join("") + "</div>" +
       '<p class="feedback" id="fb" role="status"></p>' +
       '<div class="btns"><button type="button" class="btn btn--ghost" id="hint"><span class="em" aria-hidden="true">👂</span> Hear the word</button>' +
-      '<a class="btn" href="#/blend/' + next.w + '" id="next">Next word →</a></div></div></div>';
+      (inRound ? '<span id="after"></span>' : '<a class="btn" href="#/blend" id="next">Back to words</a>') + "</div></div></div>";
     var tiles = [].slice.call(app.querySelectorAll(".tile"));
     tiles.forEach(function (t) {
       t.addEventListener("click", function () { var c = ls[+t.dataset.i]; light(t); if (hasSound(c)) play([soundPart(c)]); else stopAudio(); });
@@ -287,24 +304,46 @@
       announce(ls.join(" "));
     });
     document.getElementById("hint").addEventListener("click", function () { play([{ key: "word-" + w, text: w, rate: 0.8 }]); });
-    var fb = document.getElementById("fb"), done = false;
+    var fb = document.getElementById("fb"), done = false, tries = 0;
     app.querySelectorAll(".pic").forEach(function (b) {
       b.addEventListener("click", function () {
         if (done) return;
+        tries++;
         if (b.dataset.w === w) {
           done = true; b.classList.add("right");
           var fresh = award("blended", w);
+          if (inRound && tries === 1) B.right++;
           fb.className = "feedback ok"; fb.textContent = "Yes! " + ls.join("-") + ", " + w + "!" + (fresh ? " ★ New star!" : "");
           tiles.forEach(light);
-          play([{ key: "word-" + w, text: "Yes! " + w + "!", rate: 0.85 }]);
-          document.getElementById("next").focus();
+          play([{ key: "yes-" + w, text: "Yes! " + w + "!", rate: 0.85 }]);
+          if (inRound) {
+            var last = B.i === B.qs.length - 1;
+            document.getElementById("after").innerHTML = '<button type="button" class="btn" id="go">' + (last ? "See my round ★" : "Next word →") + "</button>";
+            var go = document.getElementById("go"); go.focus();
+            go.addEventListener("click", function () { if (last) blendRoundEnd(); else { B.i++; blendWord(B.qs[B.i].w, true); } });
+          } else {
+            document.getElementById("next").focus();
+          }
         } else {
           b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong");
           fb.className = "feedback no"; fb.textContent = "That's " + b.dataset.w + ". Slide the bee and " + (voiced ? "listen" : "say the sounds") + " again.";
-          play([{ text: "That's " + b.dataset.w + ". Try again.", rate: 0.85 }]);
+          play([{ key: "try-" + b.dataset.w, text: "That's " + b.dataset.w + ". Try again.", rate: 0.85 }]);
         }
       });
     });
+    focusTitle();
+  }
+  function blendRoundEnd() {
+    B.over = true;
+    var n = B.right, m = B.qs.length;
+    setTab("blend"); crumbs([{ t: "Blend it" }]);
+    app.innerHTML = '<div class="play"><div class="board center win">' +
+      '<p class="big" aria-hidden="true">' + (n === m ? "🏆" : n >= 6 ? "🌟" : "🐝") + '</p><h1 class="board__t">' + (n === m ? "Perfect round!" : "Great blending!") + "</h1>" +
+      "<p>You got <b>" + n + " of " + m + "</b> on the first try.</p><p class=\"muted\">" + count(S.blended) + " of " + WORDLIST.length + " words read</p>" +
+      '<div class="btns"><button type="button" class="btn" id="again">Play again</button><button type="button" class="btn btn--ghost" id="menu">Back to menu</button></div></div></div>';
+    play([{ key: n === m ? "done-perfect" : "done-blend", text: n === m ? "Perfect round! Hooray!" : "Great blending!" }]);
+    document.getElementById("again").addEventListener("click", startBlendRound);
+    document.getElementById("menu").addEventListener("click", function () { B = null; blendList(); });
     focusTitle();
   }
 
@@ -347,7 +386,7 @@
         return '<button type="button" class="lt" data-l="' + l + '" aria-label="' + up(l) + '">' + up(l) + l + "</button>";
       }).join("") + "</div>" +
       '<p class="feedback" id="fb" role="status"></p><div class="btns" id="after"></div></div></div>';
-    var ask = function () { play([{ key: "word-" + q.w, text: q.w + ". What sound does " + q.w + " start with?", rate: 0.8 }]); };
+    var ask = function () { play([{ key: "prompt-" + q.w, text: q.w + ". What sound does " + q.w + " start with?", rate: 0.8 }]); };
     document.getElementById("hear").addEventListener("click", ask);
     ask();
     var fb = document.getElementById("fb"), locked = false;
@@ -361,7 +400,7 @@
           var fresh = G.tries === 1 && award("first", q.l);
           if (G.tries === 1) G.right++;
           fb.className = "feedback ok"; fb.textContent = "Yes! " + q.w + " starts with " + up(q.l) + "." + (fresh ? " ★ New star!" : "");
-          play([{ text: "Yes! " + q.w + " starts with " + up(q.l) + ".", rate: 0.85 }]);
+          play([{ key: "yes-starts-" + q.w, text: "Yes! " + q.w + " starts with " + up(q.l) + ".", rate: 0.85 }]);
           var last = G.i === G.qs.length - 1;
           document.getElementById("after").innerHTML = '<button type="button" class="btn" id="go">' + (last ? "See my round ★" : "Next picture →") + "</button>";
           var go = document.getElementById("go"); go.focus();
@@ -369,7 +408,7 @@
         } else {
           b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong"); b.disabled = true;
           fb.className = "feedback no"; fb.textContent = "Not " + up(b.dataset.l) + ". Listen again: " + q.w + ".";
-          play([{ text: "Not " + up(b.dataset.l) + ". Listen. " + q.w + ".", rate: 0.8 }]);
+          play([{ key: "not-" + b.dataset.l + "-" + q.w, text: "Not " + up(b.dataset.l) + ". Listen. " + q.w + ".", rate: 0.8 }]);
         }
       });
     });
@@ -382,7 +421,7 @@
       '<p class="big" aria-hidden="true">' + (n === m ? "🏆" : n >= 3 ? "🌟" : "🐝") + '</p><h1 class="board__t">' + (n === m ? "Perfect round!" : "Great listening!") + "</h1>" +
       "<p>You got <b>" + n + " of " + m + "</b> on the first try.</p><p class=\"muted\">" + count(S.first) + " of 26 first sounds found</p>" +
       '<div class="btns"><button type="button" class="btn" id="again">Play again</button><a class="btn btn--ghost" href="#/">Home</a></div></div></div>';
-    play([{ text: n === m ? "Perfect round! Hooray!" : "Great listening!" }]);
+    play([{ key: n === m ? "done-perfect" : "done-listening", text: n === m ? "Perfect round! Hooray!" : "Great listening!" }]);
     document.getElementById("again").addEventListener("click", function () { G = null; game(); document.getElementById("start").click(); });
     focusTitle();
   }
@@ -416,10 +455,15 @@
     keepAudio = false;
     var h = location.hash.replace(/^#\/?/, "").split("/");
     if (h[0] !== "game" && G && !G.over) G = null;
+    if ((h[0] !== "blend" || h[1]) && B && !B.over) B = null;
     if (h[0] === "letters") letters();
     else if (h[0] === "letter") letterCard((h[1] || "").toLowerCase());
     else if (h[0] === "blend" && h[1]) blendWord(h[1].toLowerCase());
-    else if (h[0] === "blend") blendList();
+    else if (h[0] === "blend") {
+      if (B && !B.over) blendWord(B.qs[B.i].w, true);
+      else if (B && B.over) blendRoundEnd();
+      else blendList();
+    }
     else if (h[0] === "game") game();
     else if (h[0] === "stars") stars();
     else home();

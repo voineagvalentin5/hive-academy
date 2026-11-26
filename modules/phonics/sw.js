@@ -1,6 +1,6 @@
 /* Hive Phonics offline support. Network first (so a new version shows up right away), cached copy when offline.
    Only same-origin GET requests are cached; third-party requests are never stored. */
-var CACHE = "hive-phonics-v2";
+var CACHE = "hive-phonics-v3";
 var CORE = ["./", "index.html", "app.css", "app.js", "/assets/fonts/montserrat-var.woff2",
   "/chl-assets/codex-hive-mark-1x.webp", "/chl-assets/codex-hive-mark-2x.webp", "/chl-assets/codex-hive-mark-3x.webp",
   "/chl-assets/codex-hive-mark-1x.png", "/assets/brand/academy-wordmark-dark-360.webp", "/favicon.ico"];

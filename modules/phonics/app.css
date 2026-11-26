@@ -156,6 +156,15 @@ mark{background:none;color:#b0700c;text-decoration:underline;text-decoration-thi
 .feedback{min-height:1.6em;margin:16px 0 0;font:750 20px/1.4 var(--head)}
 .feedback.ok{color:var(--ok)}.feedback.no{color:var(--no)}
 
+/* blend round */
+.board--start{margin:0 auto 28px;padding:22px 24px;max-width:none}
+.board--start .how{margin:0 0 4px}
+.board--start .btns{margin-top:14px;justify-content:center}
+.round-prog{font:750 18px/1.3 var(--head);color:var(--ink2);margin:0 0 12px;text-align:center}
+.round-prog b{color:var(--ink)}
+.btns #after{display:contents}
+.board .dots{flex-wrap:wrap}
+
 /* first sound game */
 .big{font-size:72px;line-height:1;margin:4px 0 10px}
 .board .muted{color:var(--ink2)}
