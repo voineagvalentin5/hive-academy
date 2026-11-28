@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Walk the hall · Hive Academy</title>
+<meta name="description" content="Walk through the Hive Academy hall in your browser or a VR headset. Preview.">
+<meta name="theme-color" content="#0e0e0f">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preload" href="vendor/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css?v=20261128b">
+</head>
+<body>
+<!-- chl-bc -->
+<nav class="bc" aria-label="Breadcrumb">
+  <div class="bc__in">
+    <ol class="bc__list">
+      <li class="bc__item bc__item--home"><a href="https://codex-hive.com" aria-label="Codex Hive Labs, codex-hive.com"><picture><source type="image/webp" srcset="/chl-assets/codex-hive-mark-1x.webp 1x, /chl-assets/codex-hive-mark-2x.webp 2x, /chl-assets/codex-hive-mark-3x.webp 3x"><img src="/chl-assets/codex-hive-mark-1x.png" srcset="/chl-assets/codex-hive-mark-1x.png 1x, /chl-assets/codex-hive-mark-2x.png 2x, /chl-assets/codex-hive-mark-3x.png 3x" width="26" height="32" alt="" decoding="async"></picture><span class="bc__t">Codex Hive <span class="bc__labs">Labs</span></span></a></li>
+      <li class="bc__item bc__item--academy"><a href="/" aria-label="Hive Academy"><span class="bc__t">Hive Academy</span></a></li>
+      <li class="bc__item bc__item--module"><span class="cur" aria-current="page">Walk the hall</span></li>
+    </ol>
+    <span class="bc__badge">Preview</span>
+  </div>
+</nav>
+<!-- /chl-bc -->
+
+<main class="stage">
+  <canvas id="scene" aria-label="Hive Academy hall, interactive 3D view"></canvas>
+
+  <div id="loading" class="loading" role="progressbar" aria-label="Loading the hall" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="loading__card">
+      <p class="loading__eyebrow">Hive Academy</p>
+      <h1 class="loading__title">Opening the hall</h1>
+      <div class="loading__track"><div id="load-bar" class="loading__bar"></div></div>
+      <p class="loading__meta"><span id="load-pct">0%</span> <span id="load-msg">· about 11 MB</span></p>
+    </div>
+  </div>
+
+  <div class="hud">
+    <p class="hint hint--desk">Click to look around · <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to walk · <kbd>Shift</kbd> to hurry · <kbd>Esc</kbd> to let go</p>
+    <p class="hint hint--touch">Drag to look · use the stick to walk</p>
+    <button id="vr" class="vr" type="button" hidden>Enter VR</button>
+  </div>
+  <div id="joy" class="joy" aria-hidden="true"><div id="joy-knob" class="joy__knob"></div></div>
+  <p class="disclaimer"><em>In-engine preview</em></p>
+</main>
+
+<script>window.HA_VERSION='20261128b';window.HA_SIZES={"hall.glb": 8665380, "trees.glb": 1328648, "sky.hdr": 3413118, "interior.hdr": 1658588};</script>
+<script type="module" src="app.js?v=20261128b"></script>
+</body>
+</html>
